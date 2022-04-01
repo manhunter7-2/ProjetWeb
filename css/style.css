@@ -1,0 +1,26 @@
+header{
+    background-color: #00fa00; /*change after done*/
+    position: fixed;
+    top:0;
+    height:4rem;
+    width: 100%;
+    margin: 0 auto;
+    left:0;
+    text-align: center;
+}
+
+footer{
+    background-color: red;
+    position: fixed;
+    bottom:0;
+    height : 2.5rem;
+    width : 100%;
+    margin : 0 auto;
+    left:0;
+}
+
+#body-page{
+    padding-top: 4rem; /*header height*/
+    padding-bottom: 2.5rem; /*footer height*/
+    overflow: auto; /*enable scroll*/
+}

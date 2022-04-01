@@ -1,6 +1,3 @@
-<?php
- $logged = isset($_SESSION['nickname']);
- ?>
 <header>
-    <h1>Je suis un bon vieux header des familles !</h1>
+    <h3>Je suis un bon vieux header des familles !</h3>
 </header>

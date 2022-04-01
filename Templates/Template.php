@@ -2,16 +2,10 @@
 
 namespace Templates;
 
-require_once "header.php";
-
-//require_once $GLOBALS['TOOLS']."directories.php";
-
-echo($GLOBALS['TOOLS']);
-
 class Template
 {
     public static function render ($code){?>
-<!<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -23,9 +17,9 @@ class Template
     <body>
         <?php include $GLOBALS['TEMPLATE']."header.php"; ?>
         <div id="body-page">
-            <?php echo $code ?>
+            <?php echo $code?>
         </div>
-        <?php include $GLOBALS['MAIN-DIR']."/oTemplates/footer.php"; ?>
+        <?php include $GLOBALS['TEMPLATE']."footer.php"; ?>
     </body>
 </html>
 <?php }
