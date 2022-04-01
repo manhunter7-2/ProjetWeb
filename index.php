@@ -6,7 +6,8 @@ $isLog = isset($_SESSION['admin']);
 
 require $GLOBALS['TOOLS']."autoloader.php";
 autoloader::register();
-use Templates\Template; ?>
+use Templates\Template;
+?>
 
 <?php ob_start()?>
 <h1>Hello World !</h1>
