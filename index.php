@@ -1,11 +1,14 @@
 <?php
-ob_start();
-echo ("Hello World !");
-$code = ob_get_clean();
+require "Tools/directories.php";
 
-use template\Template;
+session_start();
+$isLog = isset($_SESSION['admin']);
 
-Template::render($code);
-?>
+require $GLOBALS['TOOLS']."autoloader.php";
+autoloader::register();
+use Templates\Template; ?>
 
-
+<?php ob_start()?>
+<h1>Hello World !</h1>
+<?php $add = ob_get_clean();
+Template::render($add);

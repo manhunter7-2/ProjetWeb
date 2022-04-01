@@ -1,6 +1,6 @@
 <?php
 
-namespace template;
+namespace Templates;
 
 require_once "header.php";
 
@@ -25,7 +25,7 @@ class Template
         <div id="body-page">
             <?php echo $code ?>
         </div>
-        <?php include $GLOBALS['TEMPLATE']."footer.php"; ?>
+        <?php include $GLOBALS['MAIN-DIR']."/oTemplates/footer.php"; ?>
     </body>
 </html>
 <?php }
