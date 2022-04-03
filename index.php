@@ -11,5 +11,8 @@ use Templates\Template;
 
 <?php ob_start()?>
 <h1>Hello World !</h1>
+<?php include ("Tools/dataTools.php");
+dataTools();?>
 <?php $add = ob_get_clean();
+
 Template::render($add);

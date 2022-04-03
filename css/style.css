@@ -21,6 +21,24 @@ footer{
 
 #body-page{
     padding-top: 4rem; /*header height*/
-    padding-bottom: 2.5rem; /*footer height*/
+    padding-bottom: 100%;
     overflow: auto; /*enable scroll*/
+}
+
+.art-mov{
+    height : 200px;
+    width : 90%;
+    margin-left : 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    border: 5px solid black;
+}
+
+/*.main-mov{*/
+/*    height : 180px;*/
+/*    width : 140px;*/
+/*}*/
+
+img{
+    object-fit: contain;
 }
