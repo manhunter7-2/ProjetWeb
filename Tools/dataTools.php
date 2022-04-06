@@ -25,15 +25,12 @@ function dataTools(){
 
         foreach ($result as $r): ?>
             <article class="art-mov">
-                <div class="main-mov"
-                     style="background-image: url("<?= "../".$r->poster?>")">
+                <div class="main-title">
                     <?= $r->title ?>
-<!--                    <img src="--><?php //echo $r->poster ?><!--">-->
                 </div>
-<!--                <div class="synopsis">-->
-<!--                    <p>--><?//= $r->synopsis ?><!--</p>-->
-<!--                </div>-->
+                <div class="main-poster"
+                     style="background-image: url('<?php echo($r->poster)?>')">
+                </div>
             </article>
         <?php endforeach;
-        echo ("Bite");
 }

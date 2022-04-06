@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Movies(title VARCHAR(255) NOT NULL, movDate DATE, poster VARCHAR(255), synopsis VARCHAR(100));
+CREATE TABLE IF NOT EXISTS Movies(title VARCHAR(100) NOT NULL, movDate DATE, poster VARCHAR(255), synopsis VARCHAR(2500));
 
 INSERT IGNORE INTO Movies VALUES ('Shrek',
                            '2001-07-04',
