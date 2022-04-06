@@ -22,8 +22,18 @@ footer{
 
 #main-menu{
     width: 33%;
-    height : 90%;
+    height : 97%;
     margin-top : 0;
-    text-align: center;
+    display: flex;
     border: 3px solid blue;
+}
+
+#head-title{
+    margin-left : 130px;
+    margin-top: 10px;
+}
+
+#head-login-btn{
+    margin-top: -45px;
+    margin-right: -85%;
 }

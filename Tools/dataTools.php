@@ -29,7 +29,7 @@ function dataTools(){
                     <?= $r->title ?>
                 </div>
                 <div class="main-poster"
-                     style="background-image: url('<?php echo($r->poster)?>')">
+                     style="background-image: url('<?php echo($GLOBALS['POSTERS'].$r->poster)?>')">
                 </div>
                 <div class="main-resume">
                     <?= $r->synopsis ?>
