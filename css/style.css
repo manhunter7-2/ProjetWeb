@@ -1,27 +1,10 @@
-header{
-    background-color: #00fa00; /*change after done*/
-    position: fixed;
-    top:0;
-    height:4rem;
-    width: 100%;
-    margin: 0 auto;
-    left:0;
-    text-align: center;
-}
-
-footer{
-    background-color: red;
-    position: fixed;
-    bottom:0;
-    height : 2.5rem;
-    width : 100%;
-    margin : 0 auto;
-    left:0;
+@font-face {
+    font-family: "Troubleside";
+    src:url("../fonts/Troubleside-lgjxX.ttf") format('truetype');
 }
 
 #body-page{
     padding-top: 4rem; /*header height*/
-    /*padding-bottom: 2.5rem;*/
     overflow: scroll; /*enable scroll*/
 }
 
@@ -47,8 +30,17 @@ footer{
 .main-title{
     border : 2px solid red;
     height:30px;
-    width : 170px;
+    width : 160px;
     margin-left: 25px;
     margin-top: 10px;
     text-align: center;
+    font-family: 'Troubleside', 'sans-serif';
+}
+
+.main-resume{
+    margin-right: 10px;
+    margin-left: 220px;
+    margin-top: -215px;
+    height : 200px;
+    border: 3px solid #069420;
 }

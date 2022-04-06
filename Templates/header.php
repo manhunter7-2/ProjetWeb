@@ -1,3 +1,8 @@
 <header>
-    <h3>Je suis un bon vieux header des familles !</h3>
+    <div id="main-menu">
+        <div id="head-pic">
+
+        </div>
+        <h3 id="head-title">Good Movies</h3>
+    </div>
 </header>

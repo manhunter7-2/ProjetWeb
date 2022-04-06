@@ -31,6 +31,9 @@ function dataTools(){
                 <div class="main-poster"
                      style="background-image: url('<?php echo($r->poster)?>')">
                 </div>
+                <div class="main-resume">
+                    <?= $r->synopsis ?>
+                </div>
             </article>
         <?php endforeach;
 }
