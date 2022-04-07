@@ -26,5 +26,9 @@ if (!isset($resp)){
     $log->loginForm("", $usr);
 }
 elseif(!$resp['ok_access']){
-
+    echo "<div class='login-error'>".$resp['error']."</div>";
+    $log->loginForm("", $usr, $resp['error']);
 }
+$ttl = ob_get_clean();
+$pageName = "Login";
+Template::render($ttl, $pageName);

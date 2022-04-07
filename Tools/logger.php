@@ -2,9 +2,11 @@
 
 namespace Tools;
 
+use PDO;
+
 class logger
 {
-    public function loginForm(string $act = '/', string $usr=null, $msg=null):void{
+    public function loginForm(string $act = '/', string $usr=null, string $pwd=null, $msg=null):void{
         if (isset($resp['error'])): ?>
     <div class="error">
         <?php echo $msg ?>
@@ -16,10 +18,10 @@ class logger
       target="_blank"
       class="login-form">
     <div>
-        <input type="text" class="form-control" id="name" placeholder="Nom d'utilisateur" name ="form-name">
+        <input type="text" class="form-control" id="name" placeholder="Nom d'utilisateur" name ="form-name" value="<?php echo $usr ?>">
     </div>
     <div>
-        <input type="text" class="form-control" id="pwd" placeholder="Mot de passe" name="form-pwd">
+        <input type="text" class="form-control" id="pwd" placeholder="Mot de passe" name="form-pwd" value="<?php echo $pwd ?>">
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top:10px; width: 100%">
         Send
@@ -89,6 +91,7 @@ class logger
                 $pseudo = $usr;
             }
         }
+    }
         return array(
                 'ok_access' => $ok_access,
                 'pseudo' => $pseudo,
