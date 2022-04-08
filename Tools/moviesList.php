@@ -18,10 +18,18 @@ function moviesList(){
             die("ERROR : ".$e->getMessage());
         }
 
+        if (isset($_GET['page'])){
+            $page = $_GET['page'];
+            $page = mysqli_real_escape_string($page);
+        }else{
+            $page=1;
+        }
+
         $request = "SELECT * FROM Movies";
         $rqst = $db->prepare($request);
         $rqst->execute() or die(var_dump($rqst->errorInfo()));
         $result = $rqst->fetchAll(PDO::FETCH_OBJ);
+
 
         foreach ($result as $r): ?>
             <article class="art-mov">

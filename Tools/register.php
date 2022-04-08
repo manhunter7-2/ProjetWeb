@@ -29,7 +29,7 @@ class register{
                 $username_err = "ERREUR : Veuillez entrer un nom d'utilisateur ";
             }else {
                 // Prepare a select statement
-                $rqst = "SELECT id FROM logins WHERE username = :usr";
+                $rqst = "SELECT id FROM logins WHERE nickname = :usr";
 
                 if ($sql_rqst = $pdo->prepare($rqst)) {
                     // Bind variables to the prepared statement as parameters
@@ -142,7 +142,7 @@ class register{
                     <input type="submit" class="btn btn-primary" value="Submit">
                     <input type="reset" class="btn btn-secondary ml-2" value="Reset">
                 </div>
-                <!--<p>Already have an account? <a href="login.php">Login here</a>.</p> -->
+                <p>Vous avez déjà un compte ?<a href="login.php">Se connecter</a>.</p>
             </form>
         </div>
 

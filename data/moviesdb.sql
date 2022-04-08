@@ -1,4 +1,5 @@
 CREATE TABLE Movies(
+    id       INT NOT NULL AUTO_INCREMENT,
     title    VARCHAR(100) PRIMARY KEY NOT NULL,
     movDate  DATE,
     poster   VARCHAR(255),

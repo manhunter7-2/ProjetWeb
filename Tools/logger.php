@@ -1,104 +1,114 @@
 <?php
-
 namespace Tools;
 
 use PDO;
+use PDOException;
 
 class logger
 {
-    public function loginForm(string $act = '/', string $usr=null, string $pwd=null, $msg=null):void{
-        if (isset($resp['error'])): ?>
-    <div class="error">
-        <?php echo $msg ?>
-    </div>
-    <?php endif ?>
-
-<form method="post"
-      action="<?php echo $act ?>"
-      target="_blank"
-      class="login-form">
-    <div>
-        <input type="text" class="form-control" id="name" placeholder="Nom d'utilisateur" name ="form-name" value="<?php echo $usr ?>">
-    </div>
-    <div>
-        <input type="text" class="form-control" id="pwd" placeholder="Mot de passe" name="form-pwd" value="<?php echo $pwd ?>">
-    </div>
-    <button type="submit" class="btn btn-primary" style="margin-top:10px; width: 100%">
-        Send
-    </button>
-</form>
-<?php }
-
-    public function login(string $usr, string $pwd): array
+    public function loginParams():array
     {
-
-//-------------- DATABASE CONNECT --------------------------
-        $base_name = "moviesdb";
-        $base_host = "127.0.0.1";
-        $base_port = "3306";
-        $usr = "root";
-        $passwd = "";
+        require "db_credentials.php";
 
         try {
-            $source_name = 'mysql:dbname=' . $base_name . ';host=' . $base_host . ';port=' . $base_port;
-            $db = new PDO($source_name, $usr, $passwd);
-        } catch (\Exception $e) {
-            die("ERROR : " . $e->getMessage());
+            $pdo = new PDO("mysql:host=" . $GLOBALS['DB_SERV'] . ";dbname=" . $GLOBALS['DB_NAME'], $GLOBALS['DB_USER'], $GLOBALS['DB_PWD']);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch
+        (PDOException $e) {
+            die("Erreur de connexion : " . $e->getMessage());
         }
 
-        $request = "SELECT * FROM logins";
-        $rqst = $db->prepare($request);
-        $result = $rqst->fetchAll(PDO::FETCH_OBJ);
-
-        $name_request = "SELECT nickname FROM logins WHERE EXISTS (SELECT nickname FROM logins WHERE nickname= ";
-        $pwd_request = "SELECT password FROM logins WHERE EXISTS (SELECT password FROM logins WHERE password= ";
-        $end = ")";
-//---------------------------------------------------------------
-
-        $error = null;
-        $pseudo = null;
-        $ok_access = null;
-        if (empty($usr)){
-            $error = "Veuillez saisir un nom d'utilisateur";
+        session_start();
+        if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {
+            header("location: mainPage.php");
+            exit;
         }
-        elseif (empty($pwd)){
-            $error = "Veuillez saisir un mot de passe";
-        }
-        else{
-            $usr = htmlspecialchars($usr);
-            $pwd = htmlspecialchars($pwd);
-            $usr_sql = " '$usr' ";
-            $pwd_sql = " '$pwd' ";
-            $usr_rqst = $name_request.$usr_sql.$end;
-            $pwd_rqst = $pwd_request.$pwd_sql.$end;
 
-            $usr_rqst2 = $db->prepare($usr_rqst);
-            $usr_rqst2->execute() or die(var_dump($rqst->errorInfo()));
-            $usr_result = $usr_rqst2->fetchAll(PDO::FETCH_OBJ);
+        $usr = $pwd = $usr_err = $pwd_err = $log_err = "";
 
-            $pwd_rqst2 = $db->prepare(($pwd_rqst));
-            $pwd_rqst2->execute() or die(var_dump($rqst->errorInfo()));
-            $pwd_result = $pwd_rqst2->fetchAll(PDO::FETCH_OBJ);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-            if ($usr_result != true){
-                $error = "Veuillez saisir un autre nom d'utilisateur ";
+            if (empty(trim($_POST["usr"]))) {
+                $usr_err = "Veuillez saisir un nom d'utilisateur";
+            } else {
+                $usr = trim($_POST["usr"]);
             }
-            elseif ($pwd_result != true){
-                $error = "Veuillez saisir un autre mot de passe";
+
+            if (empty(trim($_POST["pwd"]))) {
+                $pwd_err = "Veuillez saisir un mot de passe";
+            } else {
+                $pwd = trim($_POST["pwd"]);
             }
-            elseif($pwd_result && $usr_result){
-                $ok_access = true;
-                $pseudo = $usr;
+
+            if (empty($usr_err) && empty($pwd_err)) {
+                $rqst = "SELECT id, nickname, password FROM logins WHERE nickname = :usr";
+                if ($rqst2 = $pdo->prepare($rqst)) {
+                    $rqst2->bindParam(":usr", $param_usr);
+                    $param_usr = trim($_POST["usr"]);
+                    if ($rqst2->execute()) {
+                        if ($rqst2->rowCount() == 1) {
+                            if ($col = $rqst2->fetch()) {
+                                $id = $col["id"];
+                                $usr = $col["nickname"];
+                                $hash_pwd = $col["password"];
+                                if (password_verify($pwd, $hash_pwd)) {
+                                    session_start();
+                                    $_SESSION["logged"] = true;
+                                    $_SESSION["id"] = $id;
+                                    $_SESSION["usr"] = $usr;
+                                    header("location: mainPage.php");
+                                } else {
+                                    $log_err = "Mot de passe ou nom d'utilisateur incorrect";
+                                }
+                            }
+                        } else {
+                            $log_err = "Mot de passe ou nom d'utilisateur incorrect";
+                        }
+                    } else {
+                        echo("ERREUR : login failed (LOG_ERR_1)");
+                    }
+                    unset($rqst2);
+                }
             }
+            unset($pdo);
         }
-    }
         return array(
-                'ok_access' => $ok_access,
-                'pseudo' => $pseudo,
-            'erreur' => $error
+            'pwd' => $pwd,
+            'usr' => $usr,
+            'usr_err' => $usr_err,
+            'pwd_err' => $pwd_err,
+            'log_err' => $log_err,
         );
     }
 
-}
+    public function generateLogin(){
+        $array = $this->loginParams(); ?>
+        <div class="wrapper">
+            <h2>Login</h2>
+            <p>Please fill in your credentials to login.</p>
 
-?>
+            <?php
+            if(!empty($array['log_err'])){
+                echo '<div class="alert alert-danger">' . $array['log_err'] . '</div>';
+            }
+            ?>
+
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="form-group">
+                    <label>Nom d'utilisateur</label>
+                    <input type="text" name="usr" class="form-control <?php echo (!empty($array['usr_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $array['usr']; ?>">
+                    <span class="invalid-feedback"><?php echo $array['usr_err']; ?></span>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passse</label>
+                    <input type="password" name="pwd" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                    <span class="invalid-feedback"><?php echo $array['pwd_err']; ?></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Login">
+                </div>
+                <p>Vous n'avez pas de compte ?<a href="registerPage.php">S'inscrire</a>.</p>
+            </form>
+        </div>
+  <?php  }
+} ?>
