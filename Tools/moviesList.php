@@ -1,6 +1,6 @@
 <?php
 
-function dataTools(){
+function moviesList(){
         $base_name = "moviesdb";
         $base_host = "127.0.0.1"; //localhost
         $base_port = "3306"; //default SQL port
