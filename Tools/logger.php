@@ -1,22 +1,11 @@
 <?php
 namespace Tools;
 
-use PDO;
-use PDOException;
-
 class logger
 {
     public function loginParams():array
     {
-        require "db_credentials.php";
-
-        try {
-            $pdo = new PDO("mysql:host=" . $GLOBALS['DB_SERV'] . ";dbname=" . $GLOBALS['DB_NAME'], $GLOBALS['DB_USER'], $GLOBALS['DB_PWD']);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch
-        (PDOException $e) {
-            die("Erreur de connexion : " . $e->getMessage());
-        }
+        $pdo = (new dbConnect)->config();
 
         session_start();
         if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {

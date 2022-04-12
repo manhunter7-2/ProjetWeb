@@ -11,14 +11,7 @@ class register{
 
     public function setRegisterParams():array
     {
-        /* Attempt to connect to MySQL database */
-        try {
-            $pdo = new PDO("mysql:host=" . $GLOBALS['DB_SERV'] . ";dbname=" . $GLOBALS['DB_NAME'], $GLOBALS['DB_USER'], $GLOBALS['DB_PWD']);
-            // Set the PDO error mode to exception
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("ERROR: Could not connect. " . $e->getMessage());
-        }
+        require
         $usr = $mail = $usr_err = $mail_err = "";
 
 // Processing form data when form is submitted
