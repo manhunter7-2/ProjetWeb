@@ -13,9 +13,10 @@ $admin = (isset($_SESSION["usr"]) && $_SESSION["usr"] == "admin");
     </a>
     <div id="head-login-btn">
         <?php if ($log){ ?>
+                <?php if ($admin): ?>
             <a href="https://www.php.net/manual/fr/language.types.array.php">PHP</a>
+            <?php endif ?>
             <a href="<?php echo ($GLOBALS['TOOLS']."disconnect.php") ?>">Se déconnecter</a>
-
         <?php } ?>
 
         <?php if (!$log){ ?>

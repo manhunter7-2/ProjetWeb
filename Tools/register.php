@@ -19,7 +19,7 @@ class register{
         } catch (PDOException $e) {
             die("ERROR: Could not connect. " . $e->getMessage());
         }
-        $usr = $pwd = $conf_pwd = $usr_err = $pwd_err = $conf_pwd_err = "";
+        $usr = $mail = $usr_err = $mail_err = "";
 
 // Processing form data when form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -41,7 +41,7 @@ class register{
                     // Attempt to execute the prepared statement
                     if ($sql_rqst->execute()) {
                         if ($sql_rqst->rowCount() == 1) {
-                            $username_err = "Ce nom d'utilisateur existe déjà, veuillez en choisir un autre";
+                            $usr_err = "Ce nom d'utilisateur existe déjà, veuillez en choisir un autre";
                         } else {
                             $usr = trim($_POST["usr"]);
                         }
@@ -55,38 +55,26 @@ class register{
             }
 
             // Validate password
-            if (empty(trim($_POST["pwd"]))) {
-                $pwd_err = "Veuillez entrer un mot de passe";
-            } elseif (strlen(trim($_POST["pwd"])) < 4) {
-                $pwd_err = "Le mot de passe doit faire au moins 4 caractères";
-            } else {
-                $pwd = trim($_POST["pwd"]);
-            }
-
-            // Validate confirm password
-            if (empty(trim($_POST["conf_pwd"]))) {
-                $conf_pwd_err = "Veuillez cofirmer votre mot de passe";
-            } else {
-                $conf_pwd = trim($_POST["conf_pwd"]);
-                if (empty($pwd_err) && ($pwd != $conf_pwd)) {
-                    $conf_pwd_err = "Les mots de passe ne correspondent pas";
-                }
+            if (empty(trim($_POST["mail"]))) {
+                $pwd_err = "Veuillez entrer une adresse mail";
+            }else {
+                $mail = trim($_POST["mail"]);
             }
 
             // Check input errors before inserting in database
-            if (empty($usr_err) && empty($pwd_err) && empty($conf_pwd_err)) {
+            if (empty($usr_err) && empty($mail_err)) {
 
                 // Prepare an insert statement
-                $sql = "INSERT INTO logins (nickname, password) VALUES (:usr, :pwd)";
+                $sql = "INSERT INTO logins (nickname, email) VALUES (:usr, :mail)";
 
                 if ($rqst = $pdo->prepare($sql)) {
                     // Bind variables to the prepared statement as parameters
                     $rqst->bindParam(":usr", $param_usr);
-                    $rqst->bindParam(":pwd", $param_pwd);
+                    $rqst->bindParam(":mail", $param_mail);
 
                     // Set parameters
                     $param_usr = $usr;
-                    $param_pwd = password_hash($pwd, PASSWORD_DEFAULT); // Creates a password hash
+                    $param_mail = $mail;
 
                     // Attempt to execute the prepared statement
                     if ($rqst->execute()) {
@@ -105,12 +93,10 @@ class register{
             unset($pdo);
         }
         return array(
-            'pwd' => $pwd,
+            'mail' => $mail,
             'usr' => $usr,
-            'conf_pwd' => $conf_pwd,
-            'conf_pwd_err' => $conf_pwd_err,
             'usr_err' => $usr_err,
-            'pwd_err' => $pwd_err
+            'mail_err' => $mail_err
         );
     }
 
@@ -129,14 +115,9 @@ class register{
                     <span class="invalid-feedback"><?php echo $array['usr_err']; ?></span>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="pwd" class="form-control <?php echo (!empty($array['pwd_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $array['pwd']; ?>">
-                    <span class="invalid-feedback"><?php echo $array['pwd_err']; ?></span>
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" name="conf_pwd" class="form-control <?php echo (!empty($array['conf_pwd_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $array['conf_pwd']; ?>">
-                    <span class="invalid-feedback"><?php echo $array['conf_pwd_err']; ?></span>
+                    <label>Adresse mail</label>
+                    <input type="text" name="mail" class="form-control <?php echo (!empty($array['mail_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $array['mail']; ?>">
+                    <span class="invalid-feedback"><?php echo $array['mail_err']; ?></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Submit">
