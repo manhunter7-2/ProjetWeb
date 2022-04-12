@@ -1,9 +1,10 @@
 CREATE TABLE Movies(
     id       INT NOT NULL AUTO_INCREMENT,
-    title    VARCHAR(100) PRIMARY KEY NOT NULL,
+    title    VARCHAR(100) NOT NULL,
     movDate  DATE,
     poster   VARCHAR(255),
-    synopsis VARCHAR(2500)
+    synopsis VARCHAR(2500),
+    PRIMARY KEY (id, title)
 );
 
 INSERT INTO Movies (title, movDate, poster, synopsis) VALUES

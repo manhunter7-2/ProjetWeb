@@ -24,7 +24,7 @@ class logger
             exit;
         }
 
-        $usr = $pwd = $usr_err = $pwd_err = $log_err = "";
+        $usr = $mail = $usr_err = $mail_err = $log_err = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -34,14 +34,14 @@ class logger
                 $usr = trim($_POST["usr"]);
             }
 
-            if (empty(trim($_POST["pwd"]))) {
-                $pwd_err = "Veuillez saisir un mot de passe";
+            if (empty(trim($_POST["mail"]))) {
+                $mail_err = "Veuillez saisir un mot de passe";
             } else {
-                $pwd = trim($_POST["pwd"]);
+                $mail = trim($_POST["mail"]);
             }
 
             if (empty($usr_err) && empty($pwd_err)) {
-                $rqst = "SELECT id, nickname, password FROM logins WHERE nickname = :usr";
+                $rqst = "SELECT id, nickname, email FROM logins WHERE nickname = :usr";
                 if ($rqst2 = $pdo->prepare($rqst)) {
                     $rqst2->bindParam(":usr", $param_usr);
                     $param_usr = trim($_POST["usr"]);
@@ -50,13 +50,14 @@ class logger
                             if ($col = $rqst2->fetch()) {
                                 $id = $col["id"];
                                 $usr = $col["nickname"];
-                                $hash_pwd = $col["password"];
-                                if (password_verify($pwd, $hash_pwd)) {
+                                $mail_query = $col["email"];
+                                $mail = trim($_POST["mail"]);
+                                if ((filter_var($mail, FILTER_VALIDATE_EMAIL)) && $mail == $mail_query) {
                                     session_start();
                                     $_SESSION["logged"] = true;
                                     $_SESSION["id"] = $id;
                                     $_SESSION["usr"] = $usr;
-                                    header("location: mainPage.php");
+                                    header("location: ../pages/mainPage.php");
                                 } else {
                                     $log_err = "Mot de passe ou nom d'utilisateur incorrect";
                                 }
@@ -73,10 +74,10 @@ class logger
             unset($pdo);
         }
         return array(
-            'pwd' => $pwd,
+            'mail' => $mail,
             'usr' => $usr,
             'usr_err' => $usr_err,
-            'pwd_err' => $pwd_err,
+            'mail_err' => $mail_err,
             'log_err' => $log_err,
         );
     }
@@ -101,8 +102,8 @@ class logger
                 </div>
                 <div class="form-group">
                     <label>Mot de passse</label>
-                    <input type="password" name="pwd" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                    <span class="invalid-feedback"><?php echo $array['pwd_err']; ?></span>
+                    <input type="text" name="mail" class="form-control <?php echo (!empty($mail_err)) ? 'is-invalid' : ''; ?>">
+                    <span class="invalid-feedback"><?php echo $array['mail_err']; ?></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Login">
