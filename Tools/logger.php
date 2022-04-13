@@ -97,7 +97,7 @@ class logger
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Login">
                 </div>
-                <p>Vous n'avez pas de compte ?<a href="registerPage.php">S'inscrire</a>.</p>
+                <p>Vous n'avez pas de compte ? <a href="registerPage.php">S'inscrire</a></p>
             </form>
         </div>
   <?php  }

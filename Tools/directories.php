@@ -6,3 +6,4 @@ $GLOBALS['INDEX'] = "../index.php";
 $GLOBALS['TOOLS'] = "../Tools/";
 $GLOBALS['DATABASE'] = "../data/moviesdb.sql";
 $GLOBALS['SCRIPTS'] = $GLOBALS['TOOLS']."scripts/";
+$GLOBALS['PAGES'] = "../pages/";
