@@ -7,7 +7,7 @@ use PDO;
 require "directories.php";
 
 class movieAdder{
-    public function upload($rtrn): ?array{
+    private function upload($rtrn): ?array{
         $up_ok = 1;
         $filename = '';
         if (!empty($_FILES["fileUp"])){
@@ -15,20 +15,10 @@ class movieAdder{
                 $file = $_FILES['fileUp'];
                 $temp = $file['tmp_name'];
                 $filename = $file['name'];
-                $dir_name = "./test/";
-                if (!is_dir($dir_name)) mkdir($dir_name);
-                if (!mkdir($dir_name)){
-                    $up_ok = 0;
-                    echo "DIR FAILED";
-                }
-                $fullName = $dir_name. $filename;
-                move_uploaded_file($temp, $fullName);
+                $fullName = $GLOBALS['FILE_UPLOAD'].$filename;
                 $parts = pathinfo($fullName);
                 $filetype = $parts['type'];
-                echo "Le fichier a été uploadé dans ".$fullName;
-                if ($filetype == IMAGETYPE_GIF || $filetype == IMAGETYPE_JPEG || $filetype == IMAGETYPE_PNG || $filetype="png") {
-
-                }else{ ?>
+                if (!($filetype == IMAGETYPE_GIF || $filetype == IMAGETYPE_JPEG || $filetype == IMAGETYPE_PNG || $filetype="png")) { ?>
                     <div class="error-message">Le fichier doit être de format GIF, JPEG ou PNG</div>
                 <?php $up_ok = 0;
                 echo "ERREUR ";
@@ -39,11 +29,15 @@ class movieAdder{
         }else{
             $up_ok = 0;
         }
+        if ($up_ok == 1 && ($filetype == IMAGETYPE_GIF || $filetype == IMAGETYPE_JPEG || $filetype == IMAGETYPE_PNG || $filetype="png")){
+            move_uploaded_file($temp, $fullName);
+            chmod ($fullName, 0777); //if issues with upload
+            echo "Le fichier a été uploadé dans ".$fullName;
+        }
         if ($rtrn){
             return array(
                 'up_ok' => $up_ok,
                 'file' => $file['name'],
-                'test' => $fullName
             );
         }else{
             return null;
@@ -84,22 +78,26 @@ class movieAdder{
             }
             unset($request);
             unset($pdo);
-            $upload_array = $this->upload(true);
 
             //-------------- SQL REQUEST ---------------------------
-            if ($upload_array['up_ok'] == 1 && empty($syn_err) && empty($title_err)) {
-                $pdo = (new dbConnect)->config();
-                $request = "INSERT INTO Movies (title, movDate, poster, synopsis) VALUES (:title, :dat, :poster, :synopsis)";
-                $sql = $pdo->prepare($request);
-                $sql->bindParam(":title", $title);
-                $sql->bindParam(":dat", $date);
-                $sql->bindParam(":poster", $upload_array['file']);
-                $sql->bindParam(":synopsis", $syn);
-                if ($sql->execute()){
-                    header("location : ".$GLOBALS['PAGES']."mainPage.php");
+            if (empty($syn_err) && empty($title_err)) {
+                $upload_array = $this->upload(true);
+                if ($upload_array['up_ok'] == 1) {
+                    $pdo = (new dbConnect)->config();
+                    $request = "INSERT INTO Movies (title, movDate, poster, synopsis) VALUES (:title, :dat, :poster, :synopsis)";
+                    $sql = $pdo->prepare($request);
+                    $sql->bindParam(":title", $title);
+                    $sql->bindParam(":dat", $date);
+                    $sql->bindParam(":poster", $upload_array['file']);
+                    $sql->bindParam(":synopsis", $syn);
+                    if ($sql->execute()) {
+                        session_start();
+                        header("location:".$GLOBALS['PAGES']."mainPage.php");
+                    }
                 }
             }else{
-                echo $syn_err.$title_err . $upload_array['up_ok'];
+                echo $syn_err.$title_err;
+                header("location: ".$_SERVER['PHP_SELF']);
             }
             unset($sql);
             unset($pdo);
@@ -111,7 +109,6 @@ class movieAdder{
             'title_err' => $title_err,
             'syn_err' => $syn_err,
             'date' => $date,
-            'test' => $upload_array['test']
         );
     }
     public function generateUploadForm(){
@@ -123,11 +120,10 @@ class movieAdder{
                 <label>Date de sortie</label>
                 <input type="date" id="date" name="date" class="form-control" placeholder="YYYY/MM/DD" value  = "">
                 <label>Synopsis</label>
-                <?php echo $array['test'] ?>
                 <input type="text" id="synopsis" name="synopsis" class="form-control <?php echo (!empty($array['syn_err'])) ?>" placeholder="Synopsis..." value="" >
                 <label>Image du film</label>
                 <input type="file" name="fileUp" id="fileUp" class="file-data">
-                <input type="submit" name="submit" class="btn btn-primary" value="Add" formaction="<?php $this->upload(false) ?>">
+                <input type="submit" name="submit" class="btn btn-primary" value="Add" formaction="<?php ((empty($array['title_err'])) && $this->upload(false)) ?>">
             </div>
         </form>
 <?php    }
