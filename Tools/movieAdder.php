@@ -10,18 +10,28 @@ class movieAdder{
     public function upload($rtrn): ?array{
         $up_ok = 1;
         $filename = '';
-        if (!empty($_FILES['upload'])){
-            if (isset($_POST['submit'])) {
-                $file = $_FILES['upload'];
-                $filename = $file['basename'];
-                $temp = $file['tmp'];
-                $fullName = $GLOBALS['POSTERS'] . $filename;
-                $filetype = exif_imagetype($fullName);
-                if ($filetype == IMAGETYPE_GIF || $filetype == IMAGETYPE_JPEG || $filetype == IMAGETYPE_PNG) {
-                    move_uploaded_file($temp, $fullName);
+        if (!empty($_FILES["fileUp"])){
+            if (isset($_POST["submit"])) {
+                $file = $_FILES['fileUp'];
+                $temp = $file['tmp_name'];
+                $filename = $file['name'];
+                $dir_name = "./test/";
+                if (!is_dir($dir_name)) mkdir($dir_name);
+                if (!mkdir($dir_name)){
+                    $up_ok = 0;
+                    echo "DIR FAILED";
+                }
+                $fullName = $dir_name. $filename;
+                move_uploaded_file($temp, $fullName);
+                $parts = pathinfo($fullName);
+                $filetype = $parts['type'];
+                echo "Le fichier a été uploadé dans ".$fullName;
+                if ($filetype == IMAGETYPE_GIF || $filetype == IMAGETYPE_JPEG || $filetype == IMAGETYPE_PNG || $filetype="png") {
+
                 }else{ ?>
                     <div class="error-message">Le fichier doit être de format GIF, JPEG ou PNG</div>
                 <?php $up_ok = 0;
+                echo "ERREUR ";
                 }
             }else{
                 $up_ok = 0;
@@ -32,7 +42,8 @@ class movieAdder{
         if ($rtrn){
             return array(
                 'up_ok' => $up_ok,
-                'file' => $filename
+                'file' => $file['name'],
+                'test' => $fullName
             );
         }else{
             return null;
@@ -44,10 +55,10 @@ class movieAdder{
         $file_err = '';
         $syn = $syn_err = '';
         $date = '';
+        session_start();
         //-------------------------- TITLE PART ------------------------------------------
         if ($_SERVER["REQUEST_METHOD"] == "POST"){
-            echo ($_POST["title"]);
-            if (empty(trim($_POST['title']))) {
+            if (empty(trim($_POST["title"]))) {
                 $title_err = "Champ obligatoire";
             } else {
                 $title = trim($_POST["title"]);
@@ -55,10 +66,10 @@ class movieAdder{
             //-------------- DATE PART --------------------------------
             $date = date('Y-m-d', strtotime($_POST["date"]));
             //--------------- SYNOPSIS PART -------------------------------
-            if ((str_word_count($_POST["synopsis"])) < 100) {
+            if ((str_word_count($_POST["synopsis"])) > 100) {
                 $syn_err = "Le synopsis ne doit pas excéder les 100 mots.";
             } else {
-                $syn = trim($_POST["syn"]);
+                $syn = trim($_POST["synopsis"]);
             }
             $pdo = (new dbConnect())->config();
             //check is movie already exists
@@ -82,14 +93,16 @@ class movieAdder{
                 $sql = $pdo->prepare($request);
                 $sql->bindParam(":title", $title);
                 $sql->bindParam(":dat", $date);
-                $sql->bindParam(":poster", $upload_array['poster']);
+                $sql->bindParam(":poster", $upload_array['file']);
                 $sql->bindParam(":synopsis", $syn);
-                $sql->execute() or die("ERROR : " . $sql->errorCode());
+                if ($sql->execute()){
+                    header("location : ".$GLOBALS['PAGES']."mainPage.php");
+                }
+            }else{
+                echo $syn_err.$title_err . $upload_array['up_ok'];
             }
             unset($sql);
             unset($pdo);
-        }else{
-            echo "PAS EN POST";
         }
         return array(
             'title' => $title,
@@ -98,36 +111,23 @@ class movieAdder{
             'title_err' => $title_err,
             'syn_err' => $syn_err,
             'date' => $date,
+            'test' => $upload_array['test']
         );
     }
     public function generateUploadForm(){
-        session_start();
         $array = $this->adderFeature()?>
-<!--        <form action="--><?php //echo (htmlspecialchars($_SERVER['PHP_SELF'])) ?><!--" method="post">-->
-<!--            <div class="form-group">-->
-<!--                <label>Titre du film</label>-->
-<!--                <input type="text" id="title" name="title" class="form-control --><?php //echo(!empty($array['title_err'])) ?'is-invalid' : ''; ?><!--" value="--><?php //echo $array['title'] ?><!--">-->
-<!--                <label>Date de sortie</label>-->
-<!--                <input type="date" id="date" name="date" class="form-control" placeholder="YYYY/MM/DD" value  = "--><?php //echo $array['date']?><!--">-->
-<!--                <label>Synopsis</label>-->
-<!--                <input type="text" id="synopsis" name="synopsis" class="form-control --><?php //echo (!empty($array['syn_err'])) ?><!--" placeholder="Synopsis..." value="--><?php //echo $array['syn'] ?><!--" >-->
-<!--            </div>-->
-<!--        </form>-->
-<!--        <form action="--><?php //$this->upload(false) ?><!--" method="post" enctype="multipart/form-data">-->
-<!--            <label>Sélectionnez l'image à uploader</label>-->
-<!--            <input type="file" name="fileUp" id="upload">-->
-<!--            <input type="submit" name="submit" id="submit">-->
-<!--        </form>-->
-        <form action="<?php echo (htmlspecialchars($_SERVER['PHP_SELF'])) ?>" method="POST">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Titre du film</label>
-                <input type="text" id="title" class="form-control <?php echo(!empty($array['title_err'])) ?'is-invalid' : '' ?>" value="<?php echo $array['title']?>">
+                <input type="text" id="title" name="title" class="form-control <?php echo(!empty($array['title_err']))?>" placeholder="Titre..." value="">
                 <label>Date de sortie</label>
-                <input type="date" id="date" name="date" class="form-control" placeholder="YYYY/MM/DD" value  = "<?php echo $array['date']?>">
+                <input type="date" id="date" name="date" class="form-control" placeholder="YYYY/MM/DD" value  = "">
                 <label>Synopsis</label>
-                <input type="text" id="synopsis" name="synopsis" class="form-control <?php echo (!empty($array['syn_err'])) ?>" placeholder="Synopsis..." value="<?php echo $array['syn'] ?>" >
+                <?php echo $array['test'] ?>
+                <input type="text" id="synopsis" name="synopsis" class="form-control <?php echo (!empty($array['syn_err'])) ?>" placeholder="Synopsis..." value="" >
                 <label>Image du film</label>
-                <input type="file" name="fileUp" id="upload" formaction="<?php $this->upload(false) ?>">
+                <input type="file" name="fileUp" id="fileUp" class="file-data">
+                <input type="submit" name="submit" class="btn btn-primary" value="Add" formaction="<?php $this->upload(false) ?>">
             </div>
         </form>
 <?php    }

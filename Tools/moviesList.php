@@ -34,7 +34,7 @@ function moviesList(){
         foreach ($result as $r): ?>
             <article class="art-mov">
                 <div class="main-title">
-                    <?= $r->title ?>
+                    <?= $r->title?>
                 </div>
                 <div class="main-poster"
                      style="background-image: url('<?php echo($GLOBALS['POSTERS'].$r->poster)?>')">
