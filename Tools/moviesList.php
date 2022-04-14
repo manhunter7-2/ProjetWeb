@@ -1,36 +1,33 @@
 <?php
 
 function moviesList(){
-        $base_name = "moviesdb";
-        $base_host = "127.0.0.1"; //localhost
-        $base_port = "3306"; //default SQL port
+    $db = (new \Tools\dbConnect())->config();
 
-        $usr = "root";
-        $passwd = "";
-
-        //connect
-        try{
-            $source_name = 'mysql:dbname='.$base_name.';host='.$base_host.';port='.$base_port;
-            $db = new PDO($source_name, $usr, $passwd);
-        }
-
-        catch(\Exception $e){
-            die("ERROR : ".$e->getMessage());
-        }
-
-        if (isset($_GET['page'])){
-            $page = $_GET['page'];
-            $page = mysqli_real_escape_string($page);
-        }else{
-            $page=1;
-        }
-
-        $request = "SELECT * FROM Movies";
-        $rqst = $db->prepare($request);
-        $rqst->execute() or die(var_dump($rqst->errorInfo()));
-        $result = $rqst->fetchAll(PDO::FETCH_OBJ);
+    $nbre = $db->prepare("SELECT COUNT(poster) AS cpt FROM Movies");
+    $nbre->execute();
+    $ttl = $nbre->fetchAll(PDO::FETCH_ASSOC);
+    $nb_elem_per_page = 10;
+    $nb_pages = ceil($ttl[0]["cpt"]/$nb_elem_per_page);
+    if (isset($_GET['page'])){
+        $page = $_GET['page'];
+    }else{
+        $page=1;
+    }
+    $begin = ($page-1)*$nb_elem_per_page;
 
 
+    $request = "SELECT * FROM Movies LIMIT $begin,$nb_elem_per_page";
+    $rqst = $db->prepare($request);
+    $rqst->execute() or die(var_dump($rqst->errorInfo()));
+    $result = $rqst->fetchAll(PDO::FETCH_OBJ);
+
+
+ ?>
+
+    <div id="pagination">
+            <?php for ($i=1; $i<=$nb_pages; $i++){
+                echo "<a href='?page=$i'>$i</a>&nbsp;";
+            }
         foreach ($result as $r): ?>
             <article class="art-mov">
                 <div class="main-title">
@@ -43,5 +40,7 @@ function moviesList(){
                     <?= $r->synopsis ?>
                 </div>
             </article>
-        <?php endforeach;
+        <?php endforeach; ?>
+    </div>
+<?php
 }
