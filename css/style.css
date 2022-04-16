@@ -9,6 +9,11 @@
     height: 50%;
 }
 
+body{
+    /*overflow-x: hidden;*/
+    display: flex;
+}
+
 .art-mov{
     height : 300px;
     width : 100%;
@@ -68,23 +73,24 @@
     overflow: hidden;
     width: 20%;
     margin-left: 5%;
-    margin-top: 0.5%;
+    margin-top: 4%;
     height: 40px;
     position: fixed;
 }
 
 .test{
-    padding-top: 2rem;
+    padding-top: 5%;
     padding-bottom: 2rem;
     width: 20%;
-    margin-left: 80%;
+    margin-left: 78%;
     border: 2px solid grey;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #mov-all{
-    margin-top: 3rem;
-    margin-left: 3%;
+    margin-top: 8%;
+    margin-left: 2%;
     width : 75%;
     height : 75%;
     overflow: hidden;
@@ -92,7 +98,38 @@
     border: 2px solid turquoise;
 }
 
-#bigPoster{
-    height: 600px;
-    width : 480px;
+.bigPoster{
+    margin-top: 5%;
+    margin-left: 3%;
+    height: 80%;
+    width : 28%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 2px solid black;
+}
+
+.bigTitle{
+    margin-left: 35%;
+    margin-right: 5%;
+    margin-top: -40.3%;
+    height: 30px;
+    text-align: center;
+    border: 2px solid red;
+}
+
+.bigSyn{
+    margin-left: 35%;
+    margin-right: 5%;
+    margin-top : 3%;
+    height : 50%;
+    font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+    border: 2px solid coral;
+}
+
+.checkMov{
+    margin-left: 35%;
+    margin-top: 5%;
+    width : 60%;
 }

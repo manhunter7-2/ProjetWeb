@@ -13,7 +13,9 @@ $res = $rqst->fetchAll(PDO::FETCH_OBJ);
 
 
 foreach ($res as $r){ ?>
-<div id="bigPoster" style="background-image: url('<?php echo $GLOBALS['POSTERS'].$r->poster ?>')"></div>
-
+<div class="bigPoster" style="background-image: url('<?php echo $GLOBALS['POSTERS'].$r->poster ?>')"></div>
+    <div class="bigTitle"><?php echo $r->title ?></div>
+    <div class="bigSyn"><?php echo $r->synopsis ?></div>
+    <button class="checkMov">Voir la fiche...</button>
 <?php }
 ?>

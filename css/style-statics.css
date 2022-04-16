@@ -23,7 +23,7 @@ footer{
 #main-menu{
     width: 33%;
     height : 97%;
-    margin-top : 0;
+    margin-top : 500%;
     display: flex;
     border: 3px solid blue;
 }
