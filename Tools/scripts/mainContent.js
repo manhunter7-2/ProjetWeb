@@ -1,17 +1,30 @@
 document.addEventListener('DOMContentLoaded',function (){
-    let movPoster = document.getElementById("mov-all");
+    let movAll = document.getElementById("mov-all");
+    let method = "GET";
+    let url = "../Tools/movieCardDisplay.php?q=";
     let artMov = document.getElementsByClassName("art-mov");
-    for (let cpt=0; cpt<artMov.length; cpt++){
-        artMov[cpt].addEventListener('click', function (){
-            let name = this.value;
-            let request = new XMLHttpRequest();
-            request.onreadystatechange = function (){
-                if (this.status === 200){
-                    movPoster.innerHTML = this.responseText;
+
+    for (let i=0; i<artMov.length; i++){
+        artMov[i].addEventListener('click', function (){
+            let name = artMov[i].id;
+            movAll.innerText += name;
+            url += name;
+            movAll.innerText += url;
+            let httprequest = new XMLHttpRequest();
+            httprequest.onreadystatechange = function (){
+                if (httprequest.readyState === XMLHttpRequest.DONE){
+                    if (httprequest.status === 200){
+                        movAll.innerText += " Test"
+                        movAll.innerText += httprequest.response;
+                    }else{
+                        alert("ERREUR REQUETE" + httprequest.status)
+                    }
                 }
             }
-            request.open("GET", "movieCardDisplay.php?q="+name, true);
-            request.send();
+            httprequest.open(method, url);
+            httprequest.send();
         })
     }
+
+
 })

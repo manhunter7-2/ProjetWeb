@@ -36,22 +36,14 @@ function moviesList(){
     </div>
         <div class="test">
         <?php foreach ($result as $r): ?>
-            <article class="art-mov" value="<?php echo $r->title ?>">
+            <div class="art-mov" id="<?php echo $r->title ?>">
                 <div class="main-title">
                     <?= $r->title?>
                 </div>
                 <div class="main-poster"
                      style="background-image: url('<?php echo($GLOBALS['POSTERS'].$r->poster)?>')">
                 </div>
-
-<!--                <div class="main-resume">-->
-<!--                    --><?//= $r->synopsis ?>
-<!--                </div>-->
-            </article>
+            </div>
         <?php endforeach; ?>
-        </div>
-<!--    <div class="mov-all">-->
-<!--        tostestas-->
-<!--    </div>-->
 <?php
 }
