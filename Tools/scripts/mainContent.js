@@ -6,16 +6,13 @@ document.addEventListener('DOMContentLoaded',function (){
 
     for (let i=0; i<artMov.length; i++){
         artMov[i].addEventListener('click', function (){
-            let name = artMov[i].id;
-            movAll.innerText += name;
+            let name = artMov[i].id+'\t';
             url += name;
-            movAll.innerText += url;
             let httprequest = new XMLHttpRequest();
             httprequest.onreadystatechange = function (){
                 if (httprequest.readyState === XMLHttpRequest.DONE){
                     if (httprequest.status === 200){
-                        movAll.innerText += " Test"
-                        movAll.innerText += httprequest.response;
+                        movAll.innerHTML += httprequest.response;
                     }else{
                         alert("ERREUR REQUETE" + httprequest.status)
                     }
@@ -25,6 +22,4 @@ document.addEventListener('DOMContentLoaded',function (){
             httprequest.send();
         })
     }
-
-
 })

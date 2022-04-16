@@ -91,3 +91,8 @@
     position: fixed;
     border: 2px solid turquoise;
 }
+
+#bigPoster{
+    height: 600px;
+    width : 480px;
+}

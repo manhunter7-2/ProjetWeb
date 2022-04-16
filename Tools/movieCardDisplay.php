@@ -3,15 +3,17 @@
 require "directories.php";
 require "dbConnect.php";
 
-$q = intval($_GET['q']);
+$q = $_GET['q'];
 
 $db = (new Tools\dbConnect)->config();
-$request = "SELECT * FROM Movies WHERE title = '.$q.'";
+$request = "SELECT * FROM Movies WHERE title = '".$q."';";
 $rqst = $db->prepare($request);
-$rqst->execute();
-$result = $rqst->fetchAll(PDO::FETCH_OBJ);
-echo count($result);
-echo $q;?>
-    <?php foreach ($result as $r){
-        echo $r;
-    } ?>
+$rqst->execute() or die(var_dump($rqst->errorInfo()));
+$res = $rqst->fetchAll(PDO::FETCH_OBJ);
+
+
+foreach ($res as $r){ ?>
+<div id="bigPoster" style="background-image: url('<?php echo $GLOBALS['POSTERS'].$r->poster ?>')"></div>
+
+<?php }
+?>
