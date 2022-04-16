@@ -1,7 +1,9 @@
 <?php
 
+use Tools\dbConnect;
+
 function moviesList(){
-    $db = (new \Tools\dbConnect())->config();
+    $db = (new dbConnect())->config();
 
     $nbre = $db->prepare("SELECT COUNT(poster) AS cpt FROM Movies");
     $nbre->execute();
@@ -27,20 +29,29 @@ function moviesList(){
     <div id="pagination">
             <?php for ($i=1; $i<=$nb_pages; $i++){
                 echo "<a href='?page=$i'>$i</a>&nbsp;";
-            }
-        foreach ($result as $r): ?>
-            <article class="art-mov">
+            } ?>
+    </div>
+    <div id="mov-all">
+
+    </div>
+        <div class="test">
+        <?php foreach ($result as $r): ?>
+            <article class="art-mov" value="<?php echo $r->title ?>">
                 <div class="main-title">
                     <?= $r->title?>
                 </div>
                 <div class="main-poster"
                      style="background-image: url('<?php echo($GLOBALS['POSTERS'].$r->poster)?>')">
                 </div>
-                <div class="main-resume">
-                    <?= $r->synopsis ?>
-                </div>
+
+<!--                <div class="main-resume">-->
+<!--                    --><?//= $r->synopsis ?>
+<!--                </div>-->
             </article>
         <?php endforeach; ?>
-    </div>
+        </div>
+<!--    <div class="mov-all">-->
+<!--        tostestas-->
+<!--    </div>-->
 <?php
 }

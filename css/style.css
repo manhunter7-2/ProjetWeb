@@ -4,18 +4,19 @@
 }
 
 #body-page{
-    padding-top: 4rem; /*header height*/
-    overflow: scroll; /*enable scroll*/
+    padding-top: 2rem; /*header height*/
+    overflow: hidden; /*enable scroll*/
+    height: 50%;
 }
 
 .art-mov{
     height : 300px;
-    width : 90%;
-    margin-left : 5%;
+    width : 100%;
     margin-right: 5%;
     margin-bottom: 5%;
     border: 5px solid black;
 }
+
 
 .main-poster{
     height : 225px;
@@ -23,16 +24,16 @@
     background-repeat: no-repeat;
     background-size: contain;
     object-fit: contain;
-    margin-left: 25px;
-    margin-top: 15px;
+    margin-top: 5%;
+    margin-left: 17%;
 }
 
 .main-title{
     border : 2px solid red;
     height:30px;
-    width : 160px;
-    margin-left: 25px;
-    margin-top: 10px;
+    width : 90%;
+    margin-top:5%;
+    margin-left: 5%;
     text-align: center;
     font-family: 'Troubleside', 'sans-serif';
 }
@@ -62,3 +63,31 @@
     font-weight: bold;
 }
 
+#pagination{
+    border : 2px solid purple;
+    overflow: hidden;
+    width: 20%;
+    margin-left: 5%;
+    margin-top: 0.5%;
+    height: 40px;
+    position: fixed;
+}
+
+.test{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width: 20%;
+    margin-left: 80%;
+    border: 2px solid grey;
+    overflow: scroll;
+}
+
+#mov-all{
+    margin-top: 3rem;
+    margin-left: 3%;
+    width : 75%;
+    height : 75%;
+    overflow: hidden;
+    position: fixed;
+    border: 2px solid turquoise;
+}
