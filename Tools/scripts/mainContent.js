@@ -1,3 +1,5 @@
+var name;
+
 document.addEventListener('DOMContentLoaded',function (){
     let movAll = document.getElementById("mov-all");
     let method = "GET";
@@ -5,8 +7,8 @@ document.addEventListener('DOMContentLoaded',function (){
     let artMov = document.getElementsByClassName("art-mov");
 
     for (let i=0; i<artMov.length; i++){
-        artMov[i].addEventListener('click', function (){
-            let name = "";
+        artMov[i].addEventListener('click', function load(){
+            name = "";
             name = artMov[i].id;
             let urlTtl = url + name;
             let httprequest = new XMLHttpRequest();
@@ -19,8 +21,6 @@ document.addEventListener('DOMContentLoaded',function (){
                         for (let i=0; i<fullMovButton.length; i++){
                             fullMovButton[i].addEventListener('click', function (){
                                 window.location.href="fullPage.php";
-
-
                             })
                         }
                     }else{
@@ -32,14 +32,16 @@ document.addEventListener('DOMContentLoaded',function (){
             httprequest.send();
         })
     }
-    if (window.location.href.indexOf('full') > -1){
-        alert("test passed")
-        let test = document.getElementById("full-page-test");
-        if (test){
-            test.innerText += "Test 1"
+
+    if (window.location.href.indexOf("fullPage") > -1){
+        let fullPageUrl = "../Tools/fullPageDisplay.php?q=";
+        fullPageUrl+=name;
+        let added = false;
+        while (!added){
+            otherPart = "?mov="+name;
+            window.location.href += otherPart;
+            added = true;
         }
-        test.innerText += "bite";
-    }else{
-        alert("test failed")
     }
+
 })
