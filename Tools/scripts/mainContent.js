@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded',function (){
                 if (httprequest.readyState === XMLHttpRequest.DONE){
                     if (httprequest.status === 200){
                         movAll.innerHTML = httprequest.response;
+
+                        let fullMovButton = document.getElementsByClassName("checkMov");
+                        for (let i=0; i<fullMovButton.length; i++){
+                            fullMovButton[i].addEventListener('click', function (){
+                                window.location.href="fullPage.php";
+                            })
+                        }
                     }else{
                         alert("ERREUR REQUETE" + httprequest.status)
                     }
@@ -22,5 +29,15 @@ document.addEventListener('DOMContentLoaded',function (){
             httprequest.open(method, urlTtl);
             httprequest.send();
         })
+    }
+    if (window.location.href.indexOf('full') > -1){
+        alert("test passed")
+        let test = document.getElementById("full-page-test");
+        if (test){
+            test.innerText += "Test 1"
+        }
+        test.innerText += "bite";
+    }else{
+        alert("test failed")
     }
 })
