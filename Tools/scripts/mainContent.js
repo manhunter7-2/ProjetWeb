@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded',function (){
     for (let i=0; i<artMov.length; i++){
         artMov[i].addEventListener('click', function (){
             let name = "";
-            name = artMov[i].id+'\t';
+            name = artMov[i].id;
             let urlTtl = url + name;
             let httprequest = new XMLHttpRequest();
             httprequest.onreadystatechange = function (){
@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded',function (){
                         for (let i=0; i<fullMovButton.length; i++){
                             fullMovButton[i].addEventListener('click', function (){
                                 window.location.href="fullPage.php";
+
+
                             })
                         }
                     }else{
