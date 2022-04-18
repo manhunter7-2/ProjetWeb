@@ -32,5 +32,7 @@ document.addEventListener('DOMContentLoaded',function (){
             httprequest.send();
         })
     }
-    // if (window.location.href)
+        if (!(window.location.toString().includes(name)) && (window.location.toString().includes("fullPage"))) {
+            window.location.href += "?q=" + name
+    }
 })

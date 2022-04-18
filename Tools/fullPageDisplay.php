@@ -5,8 +5,8 @@ require "dbConnect.php";
 
 class fullPageDisplay{
     function display(){
-//        $q = $_GET['q'];
-        $q = "Shrek";
+        $q = $_GET['q'];
+//        $q = "Shrek";
 
         $db = (new dbConnect())->config();
         $request = "SELECT * FROM Movies WHERE title = '".$q."';";
@@ -15,9 +15,11 @@ class fullPageDisplay{
         $res = $rqst->fetchAll(\PDO::FETCH_OBJ);
 
         foreach ($res as $r) { ?>
-            <div id="fullPagePoster" style="background-image: url('<?php echo ($GLOBALS['POSTERS'].$r->poster) ?>')"></div>
-            <div id="fullPageTitle"><?php echo $r->title?></div>
-            <div id="fullPageSyn"><?php echo $r->synopsis ?></div>
+            <img id="fullPagePoster" src="<?php echo $GLOBALS['POSTERS'].$r->poster; ?>" alt="Image Du Film"
+            <div id="textWrapper">
+                <div id="fullPageTitle"><?php echo $r->title?></div>
+                <div id="fullPageSyn"><?php echo $r->synopsis ?></div>
+            </div>
 <?php
         }
     }
