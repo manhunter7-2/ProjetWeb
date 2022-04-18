@@ -32,16 +32,5 @@ document.addEventListener('DOMContentLoaded',function (){
             httprequest.send();
         })
     }
-
-    if (window.location.href.indexOf("fullPage") > -1){
-        let fullPageUrl = "../Tools/fullPageDisplay.php?q=";
-        fullPageUrl+=name;
-        let added = false;
-        while (!added){
-            otherPart = "?mov="+name;
-            window.location.href += otherPart;
-            added = true;
-        }
-    }
-
+    // if (window.location.href)
 })

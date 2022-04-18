@@ -133,3 +133,26 @@ body{
     margin-top: 5%;
     width : 60%;
 }
+
+#fullPagePoster{
+    margin-top: 5%;
+    margin-left: 3%;
+    width: 45%;
+    height : 700px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#fullPageTitle{
+    border: 2px solid hotpink;
+    margin-top: 5%;
+    margin-left: 3%;
+    width: 100%;
+    height : 20%;
+}
+
+#fullPageSyn{
+    border: 2px solid yellow;
+    margin-right: 5%;
+    margin-top: 9%;
+}
