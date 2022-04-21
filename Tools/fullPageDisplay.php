@@ -7,26 +7,38 @@ class fullPageDisplay{
 
     public function addComm():array{
         $com = "";
-        $pdo = (new dbConnect())->config();
-        if (($_SERVER["REQUEST_METHOD"]) == "POST"){
-            if ($_SESSION[''])
-            if (!(empty(trim($_POST["txtComm"])))) {
-                $sql = "INSERT INTO comments (title, txt, author) VALUES (:tit, :comm, :auth)";
-                if ($rqst = $pdo->prepare($sql)) {
-                    $com = htmlspecialchars((trim($_POST["txtComm"])));
-                    $rqst->bindParam(":tit", $_GET['q']);
-                    $rqst->bindParam(":comm", $com);
-                    $rqst->bindParam(":auth", $_SESSION["usr"]);
-                    if($rqst->execute()){
-                        header("location:".$_SERVER['PHP_SELF']);
+        if (!(isset($_SESSION['logged']))){ ?>
+       <a>Vous n'êtes pas connecté. Veuillez <a href="login.php">vous connecter</a> pour commenter.</a>
+<?php
+        } else {
+            $pdo = (new dbConnect())->config();
+            if (($_SERVER["REQUEST_METHOD"]) == "POST") {
+                    if (!(empty(trim($_POST["txtComm"])))) {
+                        $sql = "INSERT INTO comments (title, txt, author) VALUES (:tit, :comm, :auth)";
+                        if ($rqst = $pdo->prepare($sql)) {
+                            $com = htmlspecialchars((trim($_POST["txtComm"])));
+                            $rqst->bindParam(":tit", $_GET['q']);
+                            $rqst->bindParam(":comm", $com);
+                            $rqst->bindParam(":auth", $_SESSION["usr"]);
+                            if (strlen(trim($_POST["txtComm"])) == 0){
+                                die();
+                            }else if((strlen(trim($_POST["txtComm"]))-substr_count(trim($_POST["txtComm"]), ' ')) > 1500){ ?>
+                                <a>Le commentaire ne doit pas excéder 1500 caractères !</a>
+                            <?php
+                            die();
+                            }else{
+                            if ($rqst->execute()) {
+                                header("location:" . $_SERVER['PHP_SELF']);
+                            }
+                        }
+                        unset($rqst);
+                        unset($pdo);
                     }
                 }
-                unset($rqst);
-                unset($pdo);
             }
         }
         return array(
-                'txtComm' => $com,
+            'txtComm' => $com,
         );
     }
 
