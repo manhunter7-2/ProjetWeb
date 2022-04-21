@@ -3,6 +3,11 @@
 use Tools\dbConnect;
 
 function moviesList(){
+    if ($_GET['q'] == null){
+        $q = "";
+    }else{
+        $q = $_GET['q'];
+    }
     $db = (new dbConnect())->config();
 
     $nbre = $db->prepare("SELECT COUNT(poster) AS cpt FROM Movies");

@@ -38,9 +38,10 @@ footer{
 }
 
 .search{
-    width: 30%;
+    width: 10%;
+    margin-left: -21%;
 }
 
 #searchBtn{
-
+    margin-right: 7%;
 }

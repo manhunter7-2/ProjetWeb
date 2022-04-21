@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function(){
-    let src = document.getElementsByName("search");
+    let src = document.getElementsByClassName("search");
     let method = "GET";
-    let url = "../Tools/moviesList.php?src=";
+    let url = "../Tools/moviesList.php?q=";
     let btn = document.getElementById("searchBtn");
     for (let i=0; i<src.length; i++){
-        let valSrc = src[i].value
+        let valSrc = src[i]
         let urlTtl = url + valSrc;
         btn.addEventListener('click', function (){
         let httpRequestSrc = new XMLHttpRequest();
