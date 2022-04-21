@@ -11,8 +11,7 @@ class register{
 
     public function setRegisterParams():array
     {
-        require
-        $usr = $mail = $usr_err = $mail_err = "";
+        $usr = $mail = $usr_err = $mail_err = " ";
 
 // Processing form data when form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,6 +22,7 @@ class register{
             }else {
                 // Prepare a select statement
                 $rqst = "SELECT id FROM logins WHERE nickname = :usr";
+                $pdo = (new dbConnect())->config();
 
                 if ($sql_rqst = $pdo->prepare($rqst)) {
                     // Bind variables to the prepared statement as parameters
