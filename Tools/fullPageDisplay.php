@@ -4,6 +4,33 @@ require "directories.php";
 require "dbConnect.php";
 
 class fullPageDisplay{
+
+    public function addComm():array{
+        $com = "";
+        $pdo = (new dbConnect())->config();
+        if (($_SERVER["REQUEST_METHOD"]) == "POST"){
+            if ($_SESSION[''])
+            if (!(empty(trim($_POST["txtComm"])))) {
+                $sql = "INSERT INTO comments (title, txt, author) VALUES (:tit, :comm, :auth)";
+                if ($rqst = $pdo->prepare($sql)) {
+                    $com = htmlspecialchars((trim($_POST["txtComm"])));
+                    $rqst->bindParam(":tit", $_GET['q']);
+                    $rqst->bindParam(":comm", $com);
+                    $rqst->bindParam(":auth", $_SESSION["usr"]);
+                    if($rqst->execute()){
+                        header("location:".$_SERVER['PHP_SELF']);
+                    }
+                }
+                unset($rqst);
+                unset($pdo);
+            }
+        }
+        return array(
+                'txtComm' => $com,
+        );
+    }
+
+
     function display(){
         $q = $_GET['q']; //get movie name
 
@@ -19,6 +46,8 @@ class fullPageDisplay{
         $rqst = $db->prepare($request);
         $rqst->execute() or die(var_dump($rqst->errorInfo()));
         $res2 = $rqst->fetchAll(\PDO::FETCH_OBJ);
+
+
 
         foreach ($res as $r) { ?>
                 <div id="container">
@@ -40,10 +69,19 @@ class fullPageDisplay{
                 </div>
 
 <?php
+            $array = $this->addComm();
         } ?>
 
+            <form
+                action="" method="POST">
+<!--                    action="--><?php //echo htmlspecialchars($_SERVER["PHP_SELF"]) ?><!--" method="post">-->
+        <div class="form-group">
+            <textarea type="text" name="txtComm" id="txtComm" rows="2" cols="30" placeholder="Votre commentaire..." value="<?php echo $array['txtComm'] ?>"></textarea>
+            <input type="submit" class="btn btn-primary cmtBtn" value="Publier">
+        </div>
+            </form>
 
-<!--<div id="commentSection">-->
+
     <table id="comments">
         <tbody>
         <?php foreach ($res2 as $b){ ?>
@@ -54,7 +92,6 @@ class fullPageDisplay{
         <?php } ?>
         </tbody>
     </table>
-<!--</div>-->
         </div>
 <?php
     }

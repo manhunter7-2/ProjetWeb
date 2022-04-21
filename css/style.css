@@ -175,10 +175,6 @@ body{
     margin-bottom: 5%;
 }
 
-#commentSection{
-    border: 2px solid black;
-}
-
 #moviePage{
     display: flex;
     border: 2px solid purple;
@@ -186,5 +182,15 @@ body{
 
 #container{
     width: 100%;
-    overflow-y: scroll;
+    overflow: scroll;
+}
+
+#txtComm{
+    margin-top: 2%;
+    width: 50%;
+    margin-left: 5%;
+}
+
+.cmtBtn{
+    margin-top: -4%;
 }
