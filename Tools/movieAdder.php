@@ -55,7 +55,7 @@ class movieAdder{
             if (empty(trim($_POST["title"]))) {
                 $title_err = "Champ obligatoire";
             } else {
-                $title = trim($_POST["title"]);
+                $title = htmlspecialchars(trim($_POST["title"]));
             }
             //-------------- DATE PART --------------------------------
             $date = date('Y-m-d', strtotime($_POST["date"]));
@@ -63,7 +63,7 @@ class movieAdder{
             if ((str_word_count($_POST["synopsis"])) > 100) {
                 $syn_err = "Le synopsis ne doit pas excéder les 100 mots.";
             } else {
-                $syn = trim($_POST["synopsis"]);
+                $syn = htmlspecialchars(trim($_POST["synopsis"]));
             }
             $pdo = (new dbConnect())->config();
             //check is movie already exists
