@@ -137,7 +137,7 @@ body{
 #fullPagePoster{
     margin-top: 6%;
     margin-left: 2%;
-    width : 400px;
+    width : 350px;
     background-size: contain;
     background-repeat: no-repeat;
     border: 2px solid black;
@@ -165,4 +165,26 @@ body{
 
 #spaceRow{
     height: 30px;
+}
+
+#comments{
+    border: 2px solid cyan;
+    width: 95%;
+    margin-left: 2.5%;
+    margin-top: 7%;
+    margin-bottom: 5%;
+}
+
+#commentSection{
+    border: 2px solid black;
+}
+
+#moviePage{
+    display: flex;
+    border: 2px solid purple;
+}
+
+#container{
+    width: 100%;
+    overflow-y: scroll;
 }
