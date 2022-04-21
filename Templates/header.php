@@ -12,6 +12,8 @@ $admin = (isset($_SESSION["usr"]) && $_SESSION["usr"] == "admin");
     </div>
     </a>
     <div id="head-login-btn">
+        <input type="text" name="search" class="search" placeholder="Rechercher un film...">
+        <input type="submit" id="searchBtn" value="Search">
         <?php if ($log){ ?>
                 <?php if ($admin): ?>
             <a href="<?php echo $GLOBALS['PAGES']."addMovie.php" ?>">Upload</a>
