@@ -4,13 +4,14 @@ $admin = (isset($_SESSION["usr"]) && $_SESSION["usr"] == "admin");
 ?>
 
 <header>
-    <a href="mainPage.php">
     <div id="main-menu">
+    <a id="redirectMain">
         <div id="head-pic">
         </div>
         <h3 id="head-title">Good Movies</h3>
-    </div>
+
     </a>
+    </div>
     <div id="head-login-btn">
         <input type="text" name="search" class="search" placeholder="Rechercher un film...">
         <input type="submit" id="searchBtn" value="Search">

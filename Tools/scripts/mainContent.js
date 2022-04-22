@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded',function (){
     }
 
         let mainMenu = document.getElementById('main-menu');
-        mainMenu.addEventListener('mouseover', function (){
-            console.log("Test");
+        mainMenu.addEventListener('click', function (){
+            let src = document.getElementById('searchBtn')
+            src.click();
         })
 })
