@@ -4,13 +4,15 @@ document.addEventListener('DOMContentLoaded', function(){
     let url = "../Tools/moviesList.php?q=";
     let btn = document.getElementById("searchBtn");
     for (let i=0; i<src.length; i++){
-        let valSrc = src[i]
-        let urlTtl = url + valSrc;
         btn.addEventListener('click', function (){
+            let valSrc = src[i].value;
+            let urlTtl = url.concat('', valSrc)
         let httpRequestSrc = new XMLHttpRequest();
-        if (httpRequestSrc.readyState === XMLHttpRequest.DONE){
-            if (httpRequestSrc.status === 200){
-                console.log("Search functionnal");
+        httpRequestSrc.onreadystatechange = function () {
+            if (httpRequestSrc.readyState === XMLHttpRequest.DONE) {
+                if (httpRequestSrc.status === 200) {
+                    alert(urlTtl);
+                }
             }
         }
         httpRequestSrc.open(method, urlTtl);
