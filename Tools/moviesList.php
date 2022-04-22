@@ -3,10 +3,12 @@
 use Tools\dbConnect;
 
 function moviesList(){
-    if (!isset($_GET['q'])){
-        $q = "";
-    }else{
+    if (isset($_GET['q'])){
         $q = $_GET['q'];
+        $comp_sql = " WHERE LOWER(title) LIKE LOWER('%".$q."%')";
+    }else{
+        $q = "";
+        $comp_sql = "";
     }
     $db = (new dbConnect())->config();
 
@@ -23,7 +25,9 @@ function moviesList(){
     $begin = ($page-1)*$nb_elem_per_page;
 
 
-    $request = "SELECT * FROM Movies LIMIT $begin,$nb_elem_per_page";
+    $request = "SELECT * FROM Movies $comp_sql LIMIT $begin,$nb_elem_per_page"; ?>
+
+<?php
     $rqst = $db->prepare($request);
     $rqst->execute() or die(var_dump($rqst->errorInfo()));
     $result = $rqst->fetchAll(PDO::FETCH_OBJ);

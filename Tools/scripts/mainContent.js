@@ -35,4 +35,9 @@ document.addEventListener('DOMContentLoaded',function (){
         if (!(window.location.toString().includes(name)) && (window.location.toString().includes("fullPage"))) {
             window.location.href += "?q=" + name
     }
+
+        let mainMenu = document.getElementById('main-menu');
+        mainMenu.addEventListener('mouseover', function (){
+            console.log("Test");
+        })
 })
