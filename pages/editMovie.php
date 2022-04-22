@@ -5,9 +5,9 @@ require "../Tools/directories.php";
 require $GLOBALS['TOOLS']."autoloader.php";
 autoloader::register();
 use Templates\Template;
-//complete here
-//complete here
+use Tools\movEditor;
+$edt = new movEditor();
 ob_start();
-//complete here
+$edt->editor();
 $ttl = ob_get_clean();
 Template::render($ttl, $pageName);

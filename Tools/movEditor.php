@@ -1,40 +1,9 @@
 <?php
+namespace Tools;
 
 class movEditor{
     public function editor(){
-        $pdoEdit = (new \Tools\dbConnect())->config();
-        $ttl = $date = $syn = "";
-        if ($_SERVER['REQUEST_METHOD'] == "POST"){
-            if (!empty(trim($_POST['newTitle']))){
-                $ttl = htmlspecialchars(trim($_POST['newTitle']));
-            }else{
-                $dom = new DOMDocument();
-                $dom->loadHTML($this);
-                $sxpath = new DOMXPath($dom);
-                $cnt = $sxpath->query('//div[@id="oldTitle"]');
-                $ttl = $cnt;
-            }
 
-            if (!empty(trim($_POST['newSyn']))){
-                $syn = htmlspecialchars(trim($_POST['newSyn']));
-            }else{
-                $dom = new DOMDocument();
-                $dom->loadHTML($this);
-                $sxpath = new DOMXPath($dom);
-                $cnt = $sxpath->query('//div[@id="oldSyn"]');
-                $ttl = $cnt;
-            }
-
-            if (!empty(trim($_POST['newDate']))){
-                $date = date('Y-m-d', strtotime($_POST['date']));
-            }else{
-                $dom = new DOMDocument();
-                $dom->loadHTML($this);
-                $sxpath = new DOMXPath($dom);
-                $cnt = $sxpath->query('//div[@id="oldDate"]');
-                $ttl = $cnt;
-            }
-        }
 
 
         $q = $_GET['q'];
@@ -44,6 +13,54 @@ class movEditor{
         $request->execute();
         $all = $request->fetchAll(\PDO::FETCH_OBJ);
         foreach ($all as $r) {
+
+            $pdoEdit = (new \Tools\dbConnect())->config();
+            $ttl = $date = $syn = "";
+            if ($_SERVER['REQUEST_METHOD'] == "POST"){
+                if (!empty(trim($_POST['newTitle']))){
+                    $ttl = htmlspecialchars(trim($_POST['newTitle']));
+                }else{
+                    $ttl = "";
+                }
+
+                if (!empty(trim($_POST['newSyn']))){
+                    $syn = htmlspecialchars(trim($_POST['newSyn']));
+                }else{
+                    $syn = "";
+                }
+
+                if (!empty(trim($_POST['newDate']))){
+                    $date = date('Y-m-d', strtotime($_POST['date']));
+                }else{
+                    $date = "";
+                }
+            }
+                if ($ttl != ""){
+                    $sql_ttl = " title=:ttl,";
+                    $editRqst->bindParam(":ttl", $ttl);
+                }else{
+                    $sql_ttl = "";
+                if ($syn != ""){
+                    $sql_syn = " synopsis=:syn,";
+                    $editRqst->bindParam(":syn", $syn);
+                }else{
+                    $sql_syn = "";
+                }
+                if($date != ""){
+                    $date_sql = " movDate=:date";
+                    $editRqst->bindParam(":dat", $date);
+                }else{
+                    $date_sql = "";
+                }
+                $sqlEdit = "UPDATE Movies SET $sql_ttl, $sql_syn, $date_sql WHERE poster='$r->poster'";
+
+        }
+
+            if ($editRqst->execute()){
+                header("location: mainPage.php");
+            }else{
+                echo("ERREUR");
+            }
 
         ?>
 
