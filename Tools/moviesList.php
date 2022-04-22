@@ -3,6 +3,8 @@
 use Tools\dbConnect;
 
 function moviesList(){
+    $admin = (isset($_SESSION["usr"]) && $_SESSION["usr"] == "admin");
+
     if (isset($_GET['q'])){
         $q = $_GET['q'];
         $comp_sql = " WHERE LOWER(title) LIKE LOWER('%".$q."%')";
@@ -52,6 +54,9 @@ function moviesList(){
                 <div class="main-poster"
                      style="background-image: url('<?php echo($GLOBALS['POSTERS'].$r->poster)?>')">
                 </div>
+                <?php if ($admin){ ?>
+                <input type="submit" class="edit" value="Editer" id="<?php echo $r->title ?>">
+                <?php } ?>
             </div>
         <?php endforeach; ?>
 <?php
