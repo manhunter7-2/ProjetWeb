@@ -8,7 +8,7 @@ require "directories.php";
 
 class movieAdder{
     private function upload($rtrn): ?array{
-        $up_ok = 1;
+        $up_ok = 1; //1 = PROBLEM   0 = NO-PROBLEM
         $filename = '';
         if (!empty($_FILES["fileUp"])){
             if (isset($_POST["submit"])) {
