@@ -21,15 +21,18 @@ class movEditor{
 
                 if (!empty(trim($_POST['newTitle']))){
                     $text = htmlspecialchars(trim($_POST['newTitle']));
-                    $sql = "UPDATE Movies SET title='$text' WHERE poster='$r->poster';";
+                    $sql = "UPDATE Movies SET title=:ttl WHERE poster=:pst;";
                     $rqst = $ttlPdo->prepare($sql);
+                    $rqst->bindParam(":ttl", $text);
+                    $rqst->bindParam(":pst", $r->poster);
                     $rqst->execute() or die(var_dump($rqst->errorInfo()));
                 }
 
                 if (!empty(trim($_POST['newSyn']))){
                     $syn = htmlspecialchars(trim($_POST['newSyn']));
-                    $sql = "UPDATE Movies SET synopsis=$syn WHERE title='".$q."';";
+                    $sql = "UPDATE Movies SET synopsis=:syn WHERE title='".$q."';";
                     $rqst = $ttlPdo->prepare($sql);
+                    $rqst->bindParam(":syn", $syn);
                     if($rqst->execute()) {
                         header("location:".$GLOBALS['PAGES']."mainPage.php");
                     }else{
@@ -49,25 +52,30 @@ class movEditor{
 
         ?>
 
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>">
+        <form action="" method="post">
             <div class="ttl-form-group">
                 <div id="oldTitle"><?php echo $r->title ?></div>
                 <input type="text" name="newTitle" id="newTitle" class="form-control">
                 <input type="submit"  name="ttlSubmit" class="btn btn-primary" value="Edit">
             </div>
+        </form>
 
-            <div id="syn-form-group">
+        <form action="" method="post">
+        <div id="syn-form-group">
                 <div id="oldSyn"><?php echo $r->synopsis ?></div>
                 <textarea type="text" name="newSyn" id="newSyn" rows="3" cols="30" placeholder="Nouveau Synopsis..."></textarea>
-                <input type="submit" name="ttlSubmit" id="smt" class="btn btn-primary" value="Edit">
-            </div>
-
-            <div id="date-form-group">
-                <div id="oldDate"><?php if (isset($r->date)){ echo date("Y-m-d", $r->date);}else{echo("");}?></div>
-                <input type="date" id="date" name="date" class="form-control" placeholder="Nouvelle Date...">
-                <input type="submit" name="ttlSubmit" class="btn btn-primary" value="Edit">
+                <input type="submit" name="ttlSubmit" id="smt" class="btn btn-primary" value=".Edit">
             </div>
         </form>
+
+        <form action="" method="post">
+        <div id="date-form-group">
+                <div id="oldDate"><?php if (isset($r->date)){ echo date("Y-m-d", $r->date);}else{echo("");}?></div>
+                <input type="date" id="date" name="date" class="form-control" placeholder="Nouvelle Date...">
+                <input type="submit" name="ttlSubmit" class="btn btn-primary" value="Edit.">
+            </div>
+        </form>
+
 
 <?php  }
         }
