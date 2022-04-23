@@ -42,8 +42,9 @@ class movEditor{
 
                 if(!empty(trim($_POST['date']))){
                     $date = date('Y-m-d', strtotime(trim($_POST['date'])));
-                    $sql = "UPDATE Movies SET movDate='$date' WHERE id='$r->id';";
+                    $sql = "UPDATE Movies SET movDate=:dat WHERE id='$r->id';";
                     $rqst = $ttlPdo->prepare($sql);
+                    $rqst->bindParam(":dat", $date);
                     $rqst->execute() or die(var_dump($rqst->errorInfo()));
                 }
                 unset($rqst);
