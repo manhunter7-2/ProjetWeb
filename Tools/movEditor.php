@@ -52,7 +52,7 @@ class movEditor{
             }
 
         ?>
-
+                <div id="editor">
         <form action="" method="post">
             <div class="ttl-form-group">
                 <div id="oldTitle"><?php echo $r->title ?></div>
@@ -62,7 +62,7 @@ class movEditor{
         </form>
 
         <form action="" method="post">
-        <div id="syn-form-group">
+        <div class="syn-form-group">
                 <div id="oldSyn"><?php echo $r->synopsis ?></div>
                 <textarea type="text" name="newSyn" id="newSyn" rows="3" cols="30" placeholder="Nouveau Synopsis..."></textarea>
                 <input type="submit" name="ttlSubmit" id="smt" class="btn btn-primary" value=".Edit">
@@ -70,13 +70,13 @@ class movEditor{
         </form>
 
         <form action="" method="post">
-        <div id="date-form-group">
-                <div id="oldDate"><?php if (isset($r->date)){ echo date("Y-m-d", $r->date);}else{echo("");}?></div>
+        <div class="date-form-group">
+                <div id="oldDate"><?php if (isset($r->movDate)){ echo date("Y-m-d", strtotime($r->movDate));}else{echo("");}?></div>
                 <input type="date" id="date" name="date" class="form-control" placeholder="Nouvelle Date...">
                 <input type="submit" name="ttlSubmit" class="btn btn-primary" value="Edit.">
             </div>
         </form>
-
+                </div>
 
 <?php  }
         }
