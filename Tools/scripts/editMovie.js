@@ -28,4 +28,8 @@ document.addEventListener('DOMContentLoaded', function(){
         url2.delete('q')
         window.location.href += "?q=" + name;
     }
+    let a = document.getElementById('smt');
+    a.addEventListener('click', function (){
+        window.location.href="mainPage.php";
+    })
 })

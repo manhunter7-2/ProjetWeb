@@ -1,10 +1,9 @@
 <?php
 namespace Tools;
+require "directories.php";
 
 class movEditor{
     public function editor(){
-
-
 
         $q = $_GET['q'];
         $sql = "SELECT * FROM Movies WHERE title='".$q."';";
@@ -13,53 +12,39 @@ class movEditor{
         $request->execute();
         $all = $request->fetchAll(\PDO::FETCH_OBJ);
         foreach ($all as $r) {
+            echo $r->poster;
 
             $pdoEdit = (new \Tools\dbConnect())->config();
             $ttl = $date = $syn = "";
             if ($_SERVER['REQUEST_METHOD'] == "POST"){
+                $ttlPdo = (new dbConnect())->config();
+
                 if (!empty(trim($_POST['newTitle']))){
-                    $ttl = htmlspecialchars(trim($_POST['newTitle']));
-                }else{
-                    $ttl = "";
+                    $text = htmlspecialchars(trim($_POST['newTitle']));
+                    $sql = "UPDATE Movies SET title='$text' WHERE poster='$r->poster';";
+                    $rqst = $ttlPdo->prepare($sql);
+                    $rqst->execute() or die(var_dump($rqst->errorInfo()));
                 }
 
                 if (!empty(trim($_POST['newSyn']))){
                     $syn = htmlspecialchars(trim($_POST['newSyn']));
-                }else{
-                    $syn = "";
+                    $sql = "UPDATE Movies SET synopsis=$syn WHERE title='".$q."';";
+                    $rqst = $ttlPdo->prepare($sql);
+                    if($rqst->execute()) {
+                        header("location:".$GLOBALS['PAGES']."mainPage.php");
+                    }else{
+                        header("location:https://www.google.com/search?channel=fs&client=ubuntu&q=one+submit+button+per+input");
+                    }
                 }
 
-                if (!empty(trim($_POST['newDate']))){
-                    $date = date('Y-m-d', strtotime($_POST['date']));
-                }else{
-                    $date = "";
+                if(!empty(trim($_POST['date']))){
+                    $date = date('Y-m-d', strtotime(trim($_POST['date'])));
+                    $sql = "UPDATE Movies SET movDate='$date' WHERE id='$r->id';";
+                    $rqst = $ttlPdo->prepare($sql);
+                    $rqst->execute() or die(var_dump($rqst->errorInfo()));
                 }
-            }
-                if ($ttl != ""){
-                    $sql_ttl = " title=:ttl,";
-                    $editRqst->bindParam(":ttl", $ttl);
-                }else{
-                    $sql_ttl = "";
-                if ($syn != ""){
-                    $sql_syn = " synopsis=:syn,";
-                    $editRqst->bindParam(":syn", $syn);
-                }else{
-                    $sql_syn = "";
-                }
-                if($date != ""){
-                    $date_sql = " movDate=:date";
-                    $editRqst->bindParam(":dat", $date);
-                }else{
-                    $date_sql = "";
-                }
-                $sqlEdit = "UPDATE Movies SET $sql_ttl, $sql_syn, $date_sql WHERE poster='$r->poster'";
-
-        }
-
-            if ($editRqst->execute()){
-                header("location: mainPage.php");
-            }else{
-                echo("ERREUR");
+                unset($rqst);
+                unset($ttlPdo);
             }
 
         ?>
@@ -68,19 +53,22 @@ class movEditor{
             <div class="ttl-form-group">
                 <div id="oldTitle"><?php echo $r->title ?></div>
                 <input type="text" name="newTitle" id="newTitle" class="form-control">
+                <input type="submit"  name="ttlSubmit" class="btn btn-primary" value="Edit">
             </div>
 
             <div id="syn-form-group">
                 <div id="oldSyn"><?php echo $r->synopsis ?></div>
                 <textarea type="text" name="newSyn" id="newSyn" rows="3" cols="30" placeholder="Nouveau Synopsis..."></textarea>
+                <input type="submit" name="ttlSubmit" id="smt" class="btn btn-primary" value="Edit">
             </div>
 
             <div id="date-form-group">
-                <div id="oldDate"><?php echo $r->date ?></div>
-                <input type="date" id="newDate" name="newDate" class="form-control" placeholder="YYYY/MM/DD">
+                <div id="oldDate"><?php if (isset($r->date)){ echo date("Y-m-d", $r->date);}else{echo("");}?></div>
+                <input type="date" id="date" name="date" class="form-control" placeholder="Nouvelle Date...">
+                <input type="submit" name="ttlSubmit" class="btn btn-primary" value="Edit">
             </div>
         </form>
 
-<?php    }
+<?php  }
         }
 }

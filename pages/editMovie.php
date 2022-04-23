@@ -3,6 +3,7 @@ $pageName = "Edit Movie";
 require "../Tools/directories.php";
 
 require $GLOBALS['TOOLS']."autoloader.php";
+session_start();
 autoloader::register();
 use Templates\Template;
 use Tools\movEditor;
