@@ -99,24 +99,23 @@ class register{
         ?>
 
         <div class="wrapper">
-            <h2>Sign Up</h2>
-            <p>Please fill this form to create an account.</p>
+            <h2 id="regTitle">S'inscrire</h2>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="form-group">
+                <div class="login-forms">
                     <label>Nom d'utilisateur</label>
                     <input type="text" name="usr" class="form-control <?php echo (!empty($array['usr_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $array['usr']; ?>">
                     <span class="invalid-feedback"><?php echo $array['usr_err']; ?></span>
                 </div>
-                <div class="form-group">
+                <div class="login-forms">
                     <label>Adresse mail</label>
                     <input type="text" name="mail" class="form-control <?php echo (!empty($array['mail_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $array['mail']; ?>">
                     <span class="invalid-feedback"><?php echo $array['mail_err']; ?></span>
                 </div>
-                <div class="form-group">
+                <div id="regTitle">
                     <input type="submit" class="btn btn-primary" value="Submit">
                     <input type="reset" class="btn btn-secondary ml-2" value="Reset">
                 </div>
-                <p>Vous avez déjà un compte ?<a href="login.php">Se connecter</a>.</p>
+                <p id="loginMainTitle">Vous avez déjà un compte ?<a href="login.php">Se connecter</a>.</p>
             </form>
         </div>
 

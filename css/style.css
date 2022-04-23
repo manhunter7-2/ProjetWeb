@@ -199,6 +199,7 @@ body{
 /*login*/
 #loginMainTitle{
     text-align:center;
+    padding-top: 2%;
 }
 
 /*login*/
@@ -211,7 +212,13 @@ body{
     margin-left: 40%;
     width: 20%;
 }
-
+/*login*/
 #reg\?{
     margin-left: 27%;
+}
+
+/*register*/
+#regTitle{
+    margin-left: 38%;
+    padding-top: 2%;
 }
