@@ -17,7 +17,7 @@ function moviesList(){
     $nbre = $db->prepare("SELECT COUNT(poster) AS cpt FROM Movies");
     $nbre->execute();
     $ttl = $nbre->fetchAll(PDO::FETCH_ASSOC);
-    $nb_elem_per_page = 10;
+    $nb_elem_per_page = 6;
     $nb_pages = ceil($ttl[0]["cpt"]/$nb_elem_per_page);
     if (isset($_GET['page'])){
         $page = $_GET['page'];
@@ -54,9 +54,12 @@ function moviesList(){
                 <div class="main-poster"
                      style="background-image: url('<?php echo($GLOBALS['POSTERS'].$r->poster)?>')">
                 </div>
+                <div id="lowCard">
+                <div class="outDate"><?php echo date("d-m-Y", strtotime($r->movDate))?></div>
                 <?php if ($admin){ ?>
                 <input type="submit" class="edit" value="Editer" id="<?php echo $r->title ?>">
                 <?php } ?>
+            </div>
             </div>
         <?php endforeach; ?>
 <?php

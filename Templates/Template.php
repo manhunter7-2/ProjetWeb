@@ -20,7 +20,7 @@ class Template
     <script src="<?php echo $GLOBALS['SCRIPTS']."editMovie.js" ?>"></script>
     <title><?php echo($pageName)?></title>
 </head>
-    <body>
+    <body id="not4bootstrap">
         <?php include "header.php"; ?>
             <?php echo $code?>
         <?php include "footer.php"; ?>

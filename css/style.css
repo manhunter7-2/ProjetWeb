@@ -9,10 +9,13 @@
     height: 50%;
 }
 
-body{
+/*body*/
+#not4bootstrap{
     display: flex;
+    background-color: #3d3a37;
 }
 
+/*mainPage*/
 .art-mov{
     height : 300px;
     width : 100%;
@@ -21,17 +24,18 @@ body{
     border: 5px solid black;
 }
 
-
+/*mainPage*/
 .main-poster{
-    height : 225px;
+    height : 175px;
     width : 170px;
     background-repeat: no-repeat;
     background-size: contain;
     object-fit: contain;
     margin-top: 5%;
-    margin-left: 17%;
+    margin-left: 22%;
 }
 
+/*mainPage*/
 .main-title{
     border : 2px solid red;
     height:30px;
@@ -40,21 +44,7 @@ body{
     margin-left: 5%;
     text-align: center;
     font-family: 'Troubleside', 'sans-serif';
-}
-
-.main-resume{
-    margin-right: 10px;
-    margin-left: 220px;
-    margin-top: -215px;
-    height : 200px;
-    border: 3px solid #069420;
-}
-
-.login-form{
-    padding-top: 10%;
-    width : 60%;
-    margin-left: 20%;
-    height : 100%;
+    color: white;
 }
 
 .login-error{
@@ -62,12 +52,13 @@ body{
     font-weight: bold;
 }
 
+/*mainPage*/
 #pagination{
     border : 2px solid purple;
     overflow: hidden;
     width: 20%;
     margin-left: 5%;
-    margin-top: 4%;
+    margin-top: 5%;
     height: 40px;
     position: fixed;
 }
@@ -153,10 +144,6 @@ body{
     text-align: center;
 }
 
-#synRow{
-
-}
-
 #spaceRow{
     height: 30px;
 }
@@ -221,4 +208,22 @@ body{
 #regTitle{
     margin-left: 38%;
     padding-top: 2%;
+}
+/*mainPage*/
+.edit{
+    margin-top: 7%;
+    margin-left: 28%;
+    display: inline;
+}
+
+/*mainPage*/
+.outDate{
+    color: white;
+    display: inline;
+    margin-left: 5%;
+}
+
+/*mainPage*/
+#lowCard{
+    display: inline;
 }
