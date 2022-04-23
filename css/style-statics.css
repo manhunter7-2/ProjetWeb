@@ -1,5 +1,5 @@
 header{
-    background-color: #00fa00; /*change after done*/
+    background-color: turquoise; /*change after done*/
     position: fixed;
     top:0;
     height:4rem;
@@ -10,7 +10,7 @@ header{
 }
 
 footer{
-    background-color: red;
+    background-color: #cfea80;
     position: fixed;
     bottom:0;
     height : 2.5rem;
