@@ -2,7 +2,7 @@
 
 use Tools\dbConnect;
 
-function moviesList(){
+function moviesList():void{
     $admin = (isset($_SESSION["usr"]) && $_SESSION["usr"] == "admin");
 
     if (isset($_GET['q'])){

@@ -54,13 +54,13 @@
 
 /*mainPage*/
 #pagination{
-    border : 2px solid purple;
     overflow: hidden;
     width: 20%;
     margin-left: 5%;
     margin-top: 5%;
     height: 40px;
     position: fixed;
+    color: turquoise;
 }
 
 .test{
@@ -127,6 +127,7 @@
     background-repeat: no-repeat;
 }
 
+/*fullPage*/
 #arrayTab{
     position: absolute;
     z-index: -1;
@@ -136,16 +137,25 @@
     height: 47%;
 }
 
+/*fullPage*/
 #titleRow{
-    font-size: 28px;
+    font-size: 500%;
     margin-top: 6%;
     text-align: center;
+    font-family: 'Troubleside', sans-serif;
 }
 
+/*fullPage*/
 #spaceRow{
     height: 30px;
 }
 
+/*fullPage*/
+#synRow{
+    font-size: 130%;
+}
+
+/*fullPage*/
 #comments{
     border: 2px solid cyan;
     width: 95%;
@@ -159,17 +169,21 @@
     display: flex;
 }
 
+/*fullPage*/
 #container{
     width: 100%;
     overflow: scroll;
+    color: white;
 }
 
+/*fullPage*/
 #txtComm{
     margin-top: 2%;
     width: 50%;
     margin-left: 5%;
 }
 
+/*fullPage*/
 .cmtBtn{
     margin-top: -4%;
 }
@@ -244,4 +258,13 @@
     margin-top: 6%;
     margin-left: 36%;
     text-align: center;
+}
+
+/*upload*/
+.upload-form{
+    margin-top: 50%;
+    margin-left: 70%;
+    width: 140%;
+    height: 180%;
+    color:white;
 }

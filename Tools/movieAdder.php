@@ -114,7 +114,7 @@ class movieAdder{
     public function generateUploadForm(){
         $array = $this->adderFeature()?>
         <form action="" method="post" enctype="multipart/form-data">
-            <div class="form-group">
+            <div class="form-group upload-form">
                 <label>Titre du film</label>
                 <input type="text" id="title" name="title" class="form-control <?php echo(!empty($array['title_err']))?>" placeholder="Titre..." value="">
                 <label>Date de sortie</label>
