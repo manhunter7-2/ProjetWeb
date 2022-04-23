@@ -8,3 +8,4 @@ $GLOBALS['DATABASE'] = "../data/moviesdb.sql";
 $GLOBALS['SCRIPTS'] = $GLOBALS['TOOLS']."scripts/";
 $GLOBALS['PAGES'] = "../pages/";
 $GLOBALS['FILE_UPLOAD'] = "../Pictures/Posters/";
+$GLOGALS['PICTURES'] = "../Pictures/";

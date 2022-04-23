@@ -6,7 +6,7 @@ $admin = (isset($_SESSION["usr"]) && $_SESSION["usr"] == "admin");
 <header>
     <div id="main-menu">
     <a id="redirectMain">
-        <div id="head-pic">
+        <div id="head-pic" style="background-image: url('<?php echo $GLOBALS['PICTURES']."popcorn.gif" ?>')">
         </div>
         <h3 id="head-title">Good Movies</h3>
 
