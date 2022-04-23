@@ -52,6 +52,10 @@ class movEditor{
             }
 
         ?>
+                <div id="editWritings">
+                <h2 id>Edition de film</h2>
+            <p>NE MODIFIER QUE LES CHAMPS NECESSAIRES</p>
+                </div>
                 <div id="editor">
         <form action="" method="post">
             <div class="ttl-form-group">
@@ -77,6 +81,7 @@ class movEditor{
             </div>
         </form>
                 </div>
+            <input type="submit" name="delete" value="Effacer">
 
 <?php  }
         }

@@ -228,7 +228,22 @@
     display: inline;
 }
 
+/*editor*/
 #editor{
     color: white;
-    border: 2px solid white;
+    position: absolute;
+    z-index: -1;
+    margin-top: 14%;
+    margin-left: 14%;
+    margin-right: 14%;
+}
+
+/*editor*/
+#editWritings{
+    color: white;
+    position: absolute;
+    z-index: -1;
+    margin-top: 6%;
+    margin-left: 36%;
+    text-align: center;
 }
