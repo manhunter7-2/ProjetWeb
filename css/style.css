@@ -10,7 +10,6 @@
 }
 
 body{
-    /*overflow-x: hidden;*/
     display: flex;
 }
 
@@ -56,11 +55,6 @@ body{
     width : 60%;
     margin-left: 20%;
     height : 100%;
-}
-
-.form-control{
-    margin-top: 30px;
-    color: blue;
 }
 
 .login-error{
@@ -193,4 +187,31 @@ body{
 
 .cmtBtn{
     margin-top: -4%;
+}
+
+/*login*/
+.wrapper{
+    margin-top: 12%;
+    width: 50%;
+    margin-left: 25%;
+}
+
+/*login*/
+#loginMainTitle{
+    text-align:center;
+}
+
+/*login*/
+.login-forms{
+    padding-bottom: 3%;
+}
+
+/*login*/
+#log-btn{
+    margin-left: 40%;
+    width: 20%;
+}
+
+#reg\?{
+    margin-left: 27%;
 }

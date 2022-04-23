@@ -74,9 +74,7 @@ class logger
     public function generateLogin(){
         $array = $this->loginParams(); ?>
         <div class="wrapper">
-            <h2>Login</h2>
-            <p>Please fill in your credentials to login.</p>
-
+            <h2 id="loginMainTitle">Connexion</h2>
             <?php
             if(!empty($array['log_err'])){
                 echo '<div class="alert alert-danger">' . $array['log_err'] . '</div>';
@@ -84,20 +82,20 @@ class logger
             ?>
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="form-group">
-                    <label>Nom d'utilisateur</label>
+                <div class="login-forms">
+                    <label class="logLabel">Nom d'utilisateur</label>
                     <input type="text" name="usr" class="form-control <?php echo (!empty($array['usr_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $array['usr']; ?>">
                     <span class="invalid-feedback"><?php echo $array['usr_err']; ?></span>
                 </div>
-                <div class="form-group">
-                    <label>Mot de passse</label>
+                <div class="login-forms">
+                    <label class="logLabel">Mot de passse</label>
                     <input type="text" name="mail" class="form-control <?php echo (!empty($mail_err)) ? 'is-invalid' : ''; ?>">
                     <span class="invalid-feedback"><?php echo $array['mail_err']; ?></span>
                 </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Login">
+                <div class="login-forms">
+                    <input type="submit" id="log-btn" class="btn btn-primary" value="Login">
                 </div>
-                <p>Vous n'avez pas de compte ? <a href="registerPage.php">S'inscrire</a></p>
+                <p id="reg?">Vous n'avez pas de compte ? <a href="registerPage.php">S'inscrire</a></p>
             </form>
         </div>
   <?php  }
