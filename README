@@ -5,11 +5,14 @@ There are 3 files. Import those in the following order:
 3-commmentsdb.sql
 -----------------------
 
-This website was made using LAMPP.
-
 --- DIRECTORIES ERROR ---
 Files to modify:
 - db_credentials.php
 -------------------------
 
+--- PHP FILES AND DATABASES ---
+Many errors in the PHP files due to the database, but is working.
+-----------------------------
+
+This website was made using LAMPP.
 Please enable JavaScript.
