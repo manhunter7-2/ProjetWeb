@@ -7,6 +7,8 @@
 -- Version du serveur : 10.4.24-MariaDB
 -- Version de PHP : 7.4.28
 
+CREATE DATABASE moviesdb;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
