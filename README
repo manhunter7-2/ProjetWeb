@@ -1,8 +1,8 @@
 --- FOR SQL FILES ---
 There are 3 files. Import those in the following order:
 1- Movies.sql
-2- loginsdb.sql
-3-commmentsdb.sql
+2- loginsdb.sql (into moviesdb)
+3-commmentsdb.sql (into moviesdb)
 -----------------------
 
 --- DIRECTORIES ERROR ---
