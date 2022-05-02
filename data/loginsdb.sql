@@ -1,3 +1,5 @@
+USE moviesdb;
+
 CREATE TABLE logins
 (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
