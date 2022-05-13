@@ -3,7 +3,8 @@ namespace Tools;
 require "directories.php";
 
 class movEditor{
-    public function editor(){
+    public function editor(): void
+    {
 
         $q = $_GET['q'];
         $sql = "SELECT * FROM Movies WHERE title='".$q."';";
